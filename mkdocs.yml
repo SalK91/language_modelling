@@ -1,0 +1,124 @@
+# ==========================================================
+# Project Information
+# ==========================================================
+site_name: NLP Lecture Notes
+site_description: "Structured lecture notes on Natural Language Processing."
+site_author: "Salman Khan"
+repo_url: "https://github.com/SalK91/"
+edit_uri: edit/main/docs/
+repo_name: "GitHub"
+site_url: "https://salk91.github.io/language_modelling"
+copyright: "© 2025 Salman Khan — Educational Use Only"
+
+# ==========================================================
+# Theme Configuration (Material)
+# ==========================================================
+theme:
+  name: material
+  language: en
+
+  
+
+  # ---- Color Palette ----
+  palette:
+    - scheme: default   # light academic background (DEFAULT)
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    - scheme: slate     # dark mode
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/white-balance-sunny
+        name: Switch to light mode
+
+
+  # ---- Fonts ----
+  font:
+    text: "Merriweather"
+    code: "Fira Code"
+
+  # ---- Features ----
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - content.code.copy
+    - content.action.edit
+    - content.action.view
+    - search.suggest
+    - search.highlight
+
+
+# ==========================================================
+# Plugins
+# ==========================================================
+plugins:
+  - search
+  - autorefs
+  - glightbox       # image lightbox support
+  - mkdocs-jupyter
+  - print-site:
+      add_to_navigation: true
+      print_page_title: "Print/PDF"
+      include_nav: false
+      include_footer: true
+      
+
+# ==========================================================
+# Markdown Extensions
+# ==========================================================
+markdown_extensions:
+  - admonition
+  - footnotes
+  - def_list
+  - attr_list
+  - mdx_math:
+      enable_dollar_delimiter: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      permalink: true
+      toc_depth: 1   # only top-level headings in sidebar
+
+# ==========================================================
+# Extra JavaScript and Styling
+# ==========================================================
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+extra_css:
+  - styles/extra.css
+
+# ==========================================================
+# Footer and Social Links
+# ==========================================================
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/SalK91/reinforcement_learning
+  generator: false
+
+# ==========================================================
+# Navigation
+# ==========================================================
+nav:
+  - Home: "index.md"
+  - Natural Language Processing:
+      - 1. NLP an introduction: "nlp/1_intro.md"
+      - 2. Language Models and Word Sequence Probability: "nlp/2_lmnp.md"   
+      - 3. Window-based Neural Language Models: "nlp/3_nn.md"
+      - 4. Recurrent Neural Networks: "nlp/4_rnn.md"
+      - 5. Long Short-Term Memory (LSTM) Networks: "nlp/5_lstm.md"
+      - 6. Applications of RNN: "nlp/6_app_rnn.md"
+      - 7. Evaluation of Language Models: "nlp/7_eval_nlp.md"

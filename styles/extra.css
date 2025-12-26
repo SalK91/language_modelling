@@ -1,0 +1,272 @@
+/* ==========================================================================
+   Springer-style academic typography for MkDocs Material
+   Target: Springer monographs / LNCS / SpringerBriefs look
+   ========================================================================== */
+
+/* 0) Fonts */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* 1) Page width (Springer column feel) */
+.md-grid {
+  max-width: 1040px;
+}
+.md-main__inner {
+  margin-top: 0.5rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+
+}
+
+/* 2) Base typography */
+.md-typeset {
+  font-family: "IBM Plex Serif", Georgia, "Times New Roman", Times, serif;
+  font-size: 1rem;                 /* ~11pt equivalent */
+  line-height: 1.55;               /* Springer-tight leading */
+  color: var(--md-default-fg-color);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Paragraphs */
+.md-typeset p {
+  margin: 0.55em 0 0.75em;
+  widows: 2;
+  orphans: 2;
+}
+
+/* Lists */
+.md-typeset ul,
+.md-typeset ol {
+  margin: 0.35em 0 0.9em 1.2em;
+}
+.md-typeset li {
+  margin: 0.2em 0;
+}
+
+/* 3) Headings — Springer hierarchy */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--md-default-fg-color);
+}
+
+/* Chapter title */
+.md-typeset h1 {
+  font-size: 1.9rem;
+  line-height: 1.15;
+  margin: 1.0em 0 0.6em;
+  padding-bottom: 0.25em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Section */
+.md-typeset h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 1.2em 0 0.4em;
+}
+
+/* Subsection */
+.md-typeset h3 {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 1.0em 0 0.3em;
+}
+
+/* Paragraph heading */
+.md-typeset h4 {
+  font-size: 1.02rem;
+  line-height: 1.35;
+  margin: 0.9em 0 0.3em;
+}
+
+/* Remove decorative markers */
+.md-typeset h1::before,
+.md-typeset h2::before,
+.md-typeset h3::before,
+.md-typeset h4::before {
+  content: none !important;
+}
+
+/* 4) Links — subtle, book-like */
+.md-typeset a {
+  color: var(--md-typeset-a-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 0.75px;
+}
+.md-typeset a:hover {
+  text-decoration-thickness: 1.5px;
+}
+
+/* 5) Blockquotes — Springer remark style */
+.md-typeset blockquote {
+  margin: 0.9em 0;
+  padding: 0.15em 1.0em;
+  border-left: 3px solid var(--md-primary-fg-color);
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset blockquote p {
+  margin: 0.5em 0;
+}
+
+/* 6) Code */
+.md-typeset code,
+.md-typeset pre,
+.md-typeset kbd,
+.md-typeset samp {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-variant-ligatures: none;
+}
+
+/* Inline code */
+.md-typeset code {
+  font-size: 0.95rem;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Code blocks */
+.md-typeset pre {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 1rem 1.05rem;
+  border-radius: 6px;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: none;
+}
+
+/* Clipboard button subdued */
+.md-typeset .md-clipboard {
+  opacity: 0.5;
+}
+.md-typeset .md-clipboard:hover {
+  opacity: 0.85;
+}
+
+/* 7) Math — Springer proportions */
+.katex,
+.katex-display,
+mjx-container[jax="CHTML"],
+mjx-container[jax="SVG"] {
+  font-size: 1em !important;
+  line-height: 1.2 !important;
+}
+
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 8) Tables — booktabs-like */
+.md-typeset table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  margin: 0.9em 0 1.2em;
+}
+
+.md-typeset thead th {
+  font-weight: 600;
+  border-bottom: 2px solid var(--md-default-fg-color--lightest);
+  padding: 0.45rem 0.65rem;
+}
+
+.md-typeset tbody td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset tbody tr:hover {
+  background: color-mix(
+    in srgb,
+    var(--md-default-bg-color) 90%,
+    var(--md-primary-fg-color) 10%
+  );
+}
+
+/* 9) Admonitions — theorem / remark blocks */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 6px;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  box-shadow: none;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-weight: 600;
+}
+
+/* 10) Footnotes */
+.md-typeset .footnotes,
+.md-typeset .footnote,
+.md-typeset .footnote-ref {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .footnotes hr {
+  border: none;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  margin: 1.1em 0;
+}
+
+/* 11) Navigation — restrained serif */
+.md-nav__title,
+.md-nav__link {
+  font-family: "IBM Plex Serif", Georgia, serif;
+}
+
+.md-nav__link {
+  line-height: 1.3;
+}
+
+.md-nav__link--active {
+  font-weight: 600;
+}
+
+/* 12) Header minimalism */
+.md-header,
+.md-tabs {
+  box-shadow: none;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* 13) Print — Springer PDF feel */
+@media print {
+  .md-grid { max-width: 100%; }
+  .md-header,
+  .md-tabs,
+  .md-footer,
+  .md-sidebar {
+    display: none !important;
+  }
+
+  .md-typeset {
+    font-size: 11pt;
+    line-height: 1.45;
+    color: #000;
+  }
+
+  .md-typeset pre {
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+  }
+
+  mjx-container {
+    overflow: visible;
+  }
+}
+
+/* End of Springer-style theme */
