@@ -7,6 +7,7 @@ The attention mechanism alleviates this issue by allowing the decoder to dynamic
 
 ![Attention - Seq-to-seq](images/attention_seq_t_seq.png)
 
+
 ### Mathematical Formulation
 
 Assume the encoder outputs a sequence of hidden states. The encoder hidden states represent the source sequence, while the decoder hidden state represents the current generation context.
