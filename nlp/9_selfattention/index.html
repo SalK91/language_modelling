@@ -1,0 +1,1390 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Structured lecture notes on Natural Language Processing.">
+      
+      
+        <meta name="author" content="Salman Khan">
+      
+      
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/9_selfattention/">
+      
+      
+        <link rel="prev" href="../8_attention_seq2seq/">
+      
+      
+        <link rel="next" href="../10_archi/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>9. Self- Attention - NLP Lecture Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Merriweather";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/print-site.css">
+    
+      <link rel="stylesheet" href="../../css/print-site-material.css">
+    
+      <link rel="stylesheet" href="../../styles/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NLP Lecture Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              9. Self- Attention
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="cyan" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3.55 19.09 1.41 1.41 1.8-1.79-1.42-1.42M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6c0-3.32-2.69-6-6-6m8 7h3v-2h-3m-2.76 7.71 1.8 1.79 1.41-1.41-1.79-1.8M20.45 5l-1.41-1.4-1.8 1.79 1.42 1.42M13 1h-2v3h2M6.76 5.39 4.96 3.6 3.55 5l1.79 1.81zM1 13h3v-2H1m12 9h-2v3h2"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SalK91/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Natural Language Processing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../print_page/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Print/PDF
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    NLP Lecture Notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SalK91/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Natural Language Processing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Natural Language Processing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1_intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    1. NLP an introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2_lmnp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    2. Language Models and Word Sequence Probability
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3_nn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    3. Window-based Neural Language Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4_rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Recurrent Neural Networks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_lstm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    5. Long Short-Term Memory (LSTM) Networks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6_app_rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    6. Applications of RNN
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../7_eval_nlp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    7. Evaluation of Language Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    8. Attention Mechanism in Sequence-to-Sequence Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    9. Self- Attention
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_archi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    10. Transformer Architectures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    11. Tokenization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    12. Pre-training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    13. Pre-training Strategies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14_finetuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    14. Fine-tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15_cot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    15. Chain of Thought Reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16_nlg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    16. Nature Language Generation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../17_imp_nlg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    17. Improving Generation and Training for NLG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18_eval_nlu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    18. Evaluation of NLU Systems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19_eval_nlg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    19. Evaluation of NLG Systems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../20_post_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    20. Post-training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../21_advanced_topics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    21. Advanced Topics in Language Modelling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../print_page/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Print/PDF
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/9_selfattention.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/9_selfattention.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
+    </a>
+  
+
+
+  <h1>9. Self- Attention</h1>
+
+<h2 id="self-attention-and-transformers">Self-Attention and Transformers<a class="headerlink" href="#self-attention-and-transformers" title="Permanent link">¶</a></h2>
+<p>This chapter explains how self-attention addresses the core limitations of recurrent architectures and forms the foundation of Transformer models.</p>
+<h2 id="limitations-of-recurrent-models-linear-interaction-distance">Limitations of Recurrent Models: Linear Interaction Distance<a class="headerlink" href="#limitations-of-recurrent-models-linear-interaction-distance" title="Permanent link">¶</a></h2>
+<p>Recurrent neural networks (RNNs) process input sequences sequentially, typically from left to right. This enforces a form of linear locality, which reflects the useful heuristic that nearby words often influence each other's meanings. However, this sequential structure introduces several key limitations:</p>
+<ul>
+<li>
+<p>Inefficient long-range dependencies: For two tokens separated by <span class="arithmatex">\(n\)</span> positions, RNNs require <span class="arithmatex">\(O(n)\)</span> steps for information to propagate between them. This makes it difficult to model long-distance dependencies, as the gradient signal must traverse many time steps, leading to vanishing or exploding gradients. Even in gated variants such as LSTMs and GRUs, this remains a practical bottleneck.</p>
+</li>
+<li>
+<p>Hardcoded sequential bias: The linear order of token processing is baked into the architecture. However, natural language often exhibits hierarchical or non-sequential structure that is not well captured by strictly left-to-right modeling.</p>
+</li>
+<li>
+<p>Limited parallelization: The computation of each hidden state depends on the previous one. Both forward and backward passes involve <span class="arithmatex">\(O(n)\)</span> inherently sequential operations, preventing full utilization of modern parallel computing hardware such as GPUs.</p>
+</li>
+<li>
+<p>Scalability challenges: Due to the sequential nature of training, RNNs are slower to train on large datasets and harder to scale to deep architectures.</p>
+</li>
+</ul>
+<p>These issues stem from the requirement that information must pass through a chain of intermediate states. These limitations motivate the development of alternative architectures. In particular, self-attention mechanisms, as introduced in the Transformer model, allow each token to attend to all others directly in a single logical step, enabling efficient modeling of long-range dependencies and highly parallelizable computation.</p>
+<h2 id="attention-mechanisms">Attention Mechanisms<a class="headerlink" href="#attention-mechanisms" title="Permanent link">¶</a></h2>
+<p>Attention mechanisms enable each word in a sentence to dynamically incorporate information from other words. At a high level, attention treats each word’s representation as a query that retrieves and integrates information from a set of key-value pairs derived from the same or another sequence. In self-attention, queries, keys, and values are all derived from the same input sequence.</p>
+<p>Unlike recurrent models, attention does not rely on sequential processing. This leads to two key computational benefits:</p>
+<ul>
+<li>
+<p>Constant logical interaction distance: Any token can attend to any other token within a sentence in a single logical step, making the maximum dependency path <span class="arithmatex">\(O(1)\)</span>. However, the actual computational cost remains <span class="arithmatex">\(O(n^2)\)</span> due to pairwise interactions.</p>
+</li>
+<li>
+<p>Fully parallelizable: Since all token interactions can be computed simultaneously, the number of sequential (unparallelizable) operations does not grow with sequence length.</p>
+</li>
+</ul>
+<p>From encoder-decoder to self-attention.<br>
+In earlier encoder-decoder models (e.g., for machine translation), attention was applied from the decoder to the encoder, allowing the decoder to selectively focus on parts of the input sequence. In self-attention, we apply the same mechanism within a single sequence, allowing each word to attend to every other word in the same sequence.</p>
+<p>Attention as soft lookup.<br>
+Conceptually, attention can be viewed as a soft, weighted lookup in a key-value store. Each query computes a similarity score with every key, producing a weight (typically via softmax). The output is a weighted average of the values:</p>
+<div class="arithmatex">\[
+\text{output} = \operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
+\]</div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/attention_lookup.png" data-desc-position="bottom"><img alt="Attention - Soft Lookup" src="../images/attention_lookup.png"></a></p>
+<h2 id="self-attention-computing-contextual-representations">Self-Attention: Computing Contextual Representations<a class="headerlink" href="#self-attention-computing-contextual-representations" title="Permanent link">¶</a></h2>
+<p>Let <span class="arithmatex">\(\mathbf{w}_{1:n}\)</span> be a sequence of token indices. Each token <span class="arithmatex">\(\mathbf{w}_i\)</span> is mapped to an embedding vector <span class="arithmatex">\(\mathbf{x}_i \in \mathbb{R}^d\)</span> using an embedding matrix <span class="arithmatex">\(E \in \mathbb{R}^{d \times |V|}\)</span>.</p>
+<p>For each input vector <span class="arithmatex">\(\mathbf{x}_i\)</span>, we compute three linear projections:</p>
+<div class="arithmatex">\[
+\mathbf{q}_i = Q \mathbf{x}_i, \quad
+\mathbf{k}_i = K \mathbf{x}_i, \quad
+\mathbf{v}_i = V \mathbf{x}_i
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(Q, K, V \in \mathbb{R}^{d_a \times d}\)</span> are learnable projection matrices  </li>
+<li><span class="arithmatex">\(d\)</span> is the input embedding dimension  </li>
+<li><span class="arithmatex">\(d_a\)</span> is the dimension of the attention subspace (often <span class="arithmatex">\(d_a = d / h\)</span> for <span class="arithmatex">\(h\)</span> heads)</li>
+</ul>
+<p>The dot product of <span class="arithmatex">\(\mathbf{q}_i\)</span> and <span class="arithmatex">\(\mathbf{k}_j\)</span> determines how much token <span class="arithmatex">\(i\)</span> attends to token <span class="arithmatex">\(j\)</span>:</p>
+<div class="arithmatex">\[
+e_{ij} = \frac{\mathbf{q}_i^\top \mathbf{k}_j}{\sqrt{d_a}},
+\quad
+\alpha_{ij} = \text{softmax}_j(e_{ij})
+\]</div>
+<p>The scaling factor <span class="arithmatex">\(\sqrt{d_a}\)</span> stabilizes gradients by preventing dot products from growing too large.</p>
+<div class="arithmatex">\[
+\mathbf{o}_i = \sum_{j=1}^n \alpha_{ij} \mathbf{v}_j
+\]</div>
+<p>Each token’s output <span class="arithmatex">\(\mathbf{o}_i\)</span> is a weighted sum of the value vectors from all tokens, where the weights are determined by how similar their keys are to the query. Each output vector therefore represents the token in the context of the entire sequence.</p>
+<p>Multi-head attention.<br>
+Instead of one set of <span class="arithmatex">\(Q, K, V\)</span>, Transformers use <span class="arithmatex">\(h\)</span> sets to learn diverse patterns. Each head uses its own set of <span class="arithmatex">\(Q_h, K_h, V_h \in \mathbb{R}^{d_h \times d}\)</span> with <span class="arithmatex">\(d_h = d / h\)</span>, and their outputs are concatenated:</p>
+<div class="arithmatex">\[
+\text{MultiHead}(X)
+=
+\text{Concat}(\mathbf{o}_i^{(1)}, \dots, \mathbf{o}_i^{(h)}) W^O,
+\quad
+W^O \in \mathbb{R}^{d \times d}
+\]</div>
+<p>Using multiple heads allows the model to attend to different types of relationships, such as syntax, coreference, or positional patterns.</p>
+<h2 id="nonlinearities-and-the-role-of-feed-forward-networks">Nonlinearities and the Role of Feed-Forward Networks<a class="headerlink" href="#nonlinearities-and-the-role-of-feed-forward-networks" title="Permanent link">¶</a></h2>
+<p>Attention mixes information across tokens, while feed-forward networks transform information within each token. Note that the self-attention mechanism itself is linear with respect to the input embeddings. There are no activation functions inside the attention computation. Stacking more self-attention layers only re-averages and mixes value vectors.</p>
+<p>To introduce nonlinearity and enable richer representations, each Transformer block includes a position-wise feed-forward network applied independently to each token:</p>
+<div class="arithmatex">\[
+\text{FFN}(\mathbf{o}_i)
+=
+W_2 \cdot \text{ReLU}(W_1 \cdot \mathbf{o}_i + \mathbf{b}_1) + \mathbf{b}_2
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(W_1 \in \mathbb{R}^{d_{\text{ff}} \times d}\)</span> and <span class="arithmatex">\(W_2 \in \mathbb{R}^{d \times d_{\text{ff}}}\)</span> are learnable parameters  </li>
+<li><span class="arithmatex">\(d_{\text{ff}}\)</span> is typically larger than <span class="arithmatex">\(d\)</span></li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/attention_nonlinear_ff.png" data-desc-position="bottom"><img alt="Attention Nonlinear FFN" src="../images/attention_nonlinear_ff.png"></a></p>
+<p>This nonlinear transformation enhances the model's capacity and expressiveness.</p>
+<h2 id="masking-the-future-in-self-attention">Masking the Future in Self-Attention<a class="headerlink" href="#masking-the-future-in-self-attention" title="Permanent link">¶</a></h2>
+<p>In autoregressive tasks such as language modeling or machine translation decoding, the model must not attend to future tokens.</p>
+<p>Naive approach (inefficient).<br>
+At each time step <span class="arithmatex">\(i\)</span>, compute attention using only tokens <span class="arithmatex">\(1\)</span> through <span class="arithmatex">\(i\)</span>. This requires sequential recomputation and defeats parallelization.</p>
+<p>Efficient approach: causal masking.<br>
+Full attention scores are computed, but future tokens are masked by setting their logits to <span class="arithmatex">\(-\infty\)</span>:</p>
+<div class="arithmatex">\[
+e_{ij} =
+\begin{cases}
+\frac{\mathbf{q}_i^\top \mathbf{k}_j}{\sqrt{d_a}}, &amp; j \le i \\
+-\infty, &amp; j &gt; i
+\end{cases}
+\]</div>
+<p>This causes <span class="arithmatex">\(\alpha_{ij} = 0\)</span> for future positions while preserving parallel computation.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/attention_mask.png" data-desc-position="bottom"><img alt="Attention Mask" src="../images/attention_mask.png"></a></p>
+<p>Effect: Prevents information from future tokens from leaking into past representations while enabling efficient training.</p>
+<h2 id="positional-encoding-in-self-attention">Positional Encoding in Self-Attention<a class="headerlink" href="#positional-encoding-in-self-attention" title="Permanent link">¶</a></h2>
+<p>Since attention is content-based, it is insensitive to token positions unless position information is added.</p>
+<p>Absolute positional encoding.<br>
+Positional vectors <span class="arithmatex">\(\mathbf{p}_i\)</span> are added to the input embeddings:</p>
+<div class="arithmatex">\[
+\tilde{\mathbf{x}}_i = \mathbf{x}_i + \mathbf{p}_i
+\]</div>
+<p>Sinusoidal (fixed) vs learned (trainable):</p>
+<ul>
+<li>
+<p>Sinusoidal:
+<script type="math/tex; mode=display">
+\mathbf{p}_i^{(2k)} = \sin(i / 10000^{2k/d}),
+\quad
+\mathbf{p}_i^{(2k+1)} = \cos(i / 10000^{2k/d})
+</script>
+</p>
+</li>
+<li>
+<p>Learned: Each position has a trainable vector</p>
+</li>
+</ul>
+<p>Relative and rotary positional encodings:</p>
+<ul>
+<li>Relative: Represent relative distance between tokens  </li>
+<li>Rotary (RoPE): Rotate queries and keys in complex space to encode position  </li>
+</ul>
+<p>These methods improve generalization to longer contexts and are used in modern architectures such as LLaMA and Transformer-XL.</p>
+<h2 id="necessities-for-a-self-attention-building-block">Necessities for a Self-Attention Building Block<a class="headerlink" href="#necessities-for-a-self-attention-building-block" title="Permanent link">¶</a></h2>
+<ul>
+<li>Self-attention: the core mechanism  </li>
+<li>Position representations: specify sequence order since self-attention is permutation-invariant  </li>
+<li>Nonlinearities: applied after self-attention, typically via feed-forward networks  </li>
+<li>Masking: prevents future information leakage while enabling parallel computation  </li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/attention_basic.png" data-desc-position="bottom"><img alt="Attention Basics" src="../images/attention_basic.png"></a></p>
+<p>Together, these components define a complete and scalable self-attention building block.</p>
+<p>Stacking these blocks yields the Transformer architecture, which has become the dominant model for modern natural language processing.</p>
+<h2 id="sequence-stacked-and-multi-headed-attention">Sequence-Stacked and Multi-Headed Attention<a class="headerlink" href="#sequence-stacked-and-multi-headed-attention" title="Permanent link">¶</a></h2>
+<p>This section reformulates self-attention in matrix form and extends it to multi-head attention, which is the core computational unit of Transformer layers.</p>
+<h3 id="matrix-formulation-of-self-attention">Matrix formulation of self-attention<a class="headerlink" href="#matrix-formulation-of-self-attention" title="Permanent link">¶</a></h3>
+<p>Self-attention allows each token in a sequence to attend to every other token, enabling contextual representation learning. Let <span class="arithmatex">\(X = [x_1, \dots, x_n] \in \mathbb{R}^{n \times d}\)</span> be the input sequence of <span class="arithmatex">\(n\)</span> token embeddings, where <span class="arithmatex">\(d\)</span> is the embedding dimension. Each row <span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span> corresponds to the <span class="arithmatex">\(i\)</span>-th token. We compute projections of the input to obtain the query, key, and value matrices:</p>
+<div class="arithmatex">\[
+Q = X W_Q, \quad K = X W_K, \quad V = X W_V
+\]</div>
+<p>where <span class="arithmatex">\(W_Q, W_K, W_V \in \mathbb{R}^{d \times d_k}\)</span> are learned projection matrices, and<br>
+<span class="arithmatex">\(Q, K, V \in \mathbb{R}^{n \times d_k}\)</span> are the resulting matrices of projected queries, keys, and values.</p>
+<p>This matrix formulation allows attention to be computed for all tokens simultaneously using efficient linear algebra operations.</p>
+<p>Interpretation of dimensions:</p>
+<ul>
+<li><span class="arithmatex">\(n\)</span>: number of tokens in the input sequence  </li>
+<li><span class="arithmatex">\(d\)</span>: original token embedding dimension  </li>
+<li><span class="arithmatex">\(d_k\)</span>: dimensionality of projected query, key, and value vectors  </li>
+<li><span class="arithmatex">\(Q_{i\cdot}, K_{j\cdot} \in \mathbb{R}^{d_k}\)</span>: the query vector for token <span class="arithmatex">\(i\)</span> and the key vector for token <span class="arithmatex">\(j\)</span>  </li>
+</ul>
+<h3 id="scaled-dot-product-attention">Scaled dot-product attention<a class="headerlink" href="#scaled-dot-product-attention" title="Permanent link">¶</a></h3>
+<p>Attention scores are computed using scaled dot-products between queries and keys:</p>
+<div class="arithmatex">\[
+S = \frac{Q K^\top}{\sqrt{d_k}} \in \mathbb{R}^{n \times n}
+\]</div>
+<p>The matrix <span class="arithmatex">\(S\)</span> therefore contains all pairwise token interactions in the sequence. Each entry <span class="arithmatex">\(S_{ij}\)</span> represents the unnormalized attention score from token <span class="arithmatex">\(i\)</span> to token <span class="arithmatex">\(j\)</span>. The division by <span class="arithmatex">\(\sqrt{d_k}\)</span> stabilizes gradients by preventing dot products from becoming too large in high dimensions. A row-wise softmax is applied to <span class="arithmatex">\(S\)</span> to produce attention weights, which are then used to compute a weighted sum of the value vectors:</p>
+<div class="arithmatex">\[
+\text{Attention}(Q, K, V)
+=
+\text{softmax}\!\left( \frac{Q K^\top}{\sqrt{d_k}} \right) V
+\in \mathbb{R}^{n \times d_k}
+\]</div>
+<p>This formulation enables fully parallelizable all-to-all interactions between tokens in a single matrix operation. </p>
+<p>While single-head attention can model dependencies, it is limited to a single representation subspace.</p>
+<h3 id="multi-head-self-attention">Multi-head self-attention.<a class="headerlink" href="#multi-head-self-attention" title="Permanent link">¶</a></h3>
+<p>Single-head attention captures a single type of interaction. To disentangle different kinds of linguistic relationships such as syntactic structure, semantic similarity, or positional alignment, Transformers use multi-head attention, which computes multiple attention distributions in parallel.</p>
+<p>Let <span class="arithmatex">\(h\)</span> be the number of attention heads. For each head <span class="arithmatex">\(\ell \in \{1, \dots, h\}\)</span>, the input<br>
+<span class="arithmatex">\(X \in \mathbb{R}^{n \times d}\)</span> is projected into separate subspaces using head-specific learned matrices:</p>
+<div class="arithmatex">\[
+Q_\ell = X W_{\ell Q}, \quad
+K_\ell = X W_{\ell K}, \quad
+V_\ell = X W_{\ell V},
+\]</div>
+<p>where <span class="arithmatex">\(W_{\ell Q}, W_{\ell K}, W_{\ell V} \in \mathbb{R}^{d \times d_h}\)</span> and <span class="arithmatex">\(d_h = d / h\)</span>, ensuring that total computational cost remains comparable to single-head attention.</p>
+<p>Each head computes its own scaled dot-product attention:</p>
+<div class="arithmatex">\[
+\text{head}_\ell
+=
+\text{softmax}\!\left( \frac{Q_\ell K_\ell^\top}{\sqrt{d_h}} \right) V_\ell
+\in \mathbb{R}^{n \times d_h}
+\]</div>
+<p>The outputs of all heads are then concatenated and linearly transformed to produce the final result:</p>
+<div class="arithmatex">\[
+\text{MultiHead}(X)
+=
+\text{Concat}(\text{head}_1, \dots, \text{head}_h) W^O,
+\quad
+W^O \in \mathbb{R}^{d \times d}
+\]</div>
+<p>The output combines multiple perspectives on the sequence, each capturing different relational patterns.</p>
+<h3 id="implementation-efficiency">Implementation efficiency<a class="headerlink" href="#implementation-efficiency" title="Permanent link">¶</a></h3>
+<p>Despite computing multiple attention heads, multi-head attention is efficient in practice. Once the projections <span class="arithmatex">\(Q\)</span>, <span class="arithmatex">\(K\)</span>, and <span class="arithmatex">\(V\)</span> are computed jointly for all heads, the resulting tensors are reshaped into <span class="arithmatex">\((n, h, d_h)\)</span> and then transposed to <span class="arithmatex">\((h, n, d_h)\)</span> to enable batched attention computation across heads. Treating the head index as an additional batch dimension allows highly optimized parallel execution.</p>
+<p>Summary: Multi-head attention provides rich modeling capacity by enabling the network to focus on different parts of the sequence using separate learned subspaces. Each head attends to different contextual signals, and their combination offers a composite, expressive representation that is crucial for modeling complex dependencies in natural language.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/multihead.png" data-desc-position="bottom"><img alt="Multi-head Self-attention" src="../images/multihead.png"></a></p>
+<h2 id="optimization-tricks-add-norm">Optimization Tricks – Add &amp; Norm<a class="headerlink" href="#optimization-tricks-add-norm" title="Permanent link">¶</a></h2>
+<p>The Transformer uses the multi-head self-attention mechanism introduced earlier. To ensure better training dynamics and convergence, it incorporates two critical optimization components in each block:</p>
+<ul>
+<li>Residual connections  </li>
+<li>Layer normalization  </li>
+</ul>
+<p>These operations are often summarized as Add &amp; Norm, since they occur together at every sublayer.</p>
+<h3 id="residual-connections">Residual Connections<a class="headerlink" href="#residual-connections" title="Permanent link">¶</a></h3>
+<p>Residual (or skip) connections help mitigate the vanishing gradient problem and make deep networks easier to train.  Instead of applying a transformation layer directly to the input:</p>
+<div class="arithmatex">\[
+\mathbf{x}^{(i)} = \text{Layer}(\mathbf{x}^{(i-1)})
+\]</div>
+<p>we instead compute:</p>
+<div class="arithmatex">\[
+\mathbf{x}^{(i)} = \mathbf{x}^{(i-1)} + \text{Layer}(\mathbf{x}^{(i-1)})
+\]</div>
+<p>This formulation learns only the residual between the input and the output, which often makes optimization easier. Key benefits include:</p>
+<ul>
+<li>Stable gradients: the gradient through the residual path is exactly 1, which improves backpropagation through deep networks  </li>
+<li>Bias toward the identity function: encourages the model to retain information from earlier layers when deeper transformations are unnecessary  </li>
+</ul>
+<p>In Transformers, residual connections are applied around both the self-attention sublayer and the feed-forward sublayer.</p>
+<h3 id="layer-normalization">Layer Normalization<a class="headerlink" href="#layer-normalization" title="Permanent link">¶</a></h3>
+<p>Layer normalization improves training speed and stability by standardizing intermediate representations. Given a vector <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^d\)</span>, layer normalization computes:</p>
+<div class="arithmatex">\[
+\mu = \frac{1}{d} \sum_{j=1}^{d} x_j,
+\quad
+\sigma = \sqrt{ \frac{1}{d} \sum_{j=1}^{d} (x_j - \mu)^2 }
+\]</div>
+<p>The normalized output is then:</p>
+<div class="arithmatex">\[
+\text{LayerNorm}(\mathbf{x})
+=
+\frac{\mathbf{x} - \mu}{\sigma + \epsilon} \odot \gamma + \beta
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\gamma \in \mathbb{R}^d\)</span> is a learnable gain parameter  </li>
+<li><span class="arithmatex">\(\beta \in \mathbb{R}^d\)</span> is a learnable bias parameter  </li>
+<li><span class="arithmatex">\(\epsilon\)</span> is a small constant for numerical stability  </li>
+</ul>
+<p>The normalization is applied along the feature dimension independently for each token. This reduces internal covariate shift and stabilizes training.</p>
+<p>Unlike batch normalization, layer normalization does not depend on batch statistics and is therefore well suited for sequence models.</p>
+<p>Together, multi-head attention, residual connections, and layer normalization form the backbone of modern Transformer architectures.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../8_attention_seq2seq/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 8. Attention Mechanism in Sequence-to-Sequence Models">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                8. Attention Mechanism in Sequence-to-Sequence Models
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../10_archi/" class="md-footer__link md-footer__link--next" aria-label="Next: 10. Transformer Architectures">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                10. Transformer Architectures
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2025 Salman Khan — Educational Use Only
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/SalK91/reinforcement_learning" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../js/print-site.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
