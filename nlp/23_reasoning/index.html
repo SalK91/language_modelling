@@ -9,13 +9,11 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/16_nlg/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/23_reasoning/">
       
       
-        <link rel="prev" href="../15_cot/">
+        <link rel="prev" href="../22_llm_training_basics/">
       
-      
-        <link rel="next" href="../17_imp_nlg/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -23,7 +21,7 @@
     
     
       
-        <title>16. Nature Language Generation - NLP Lecture Notes</title>
+        <title>23. Reasoning in LLMs - NLP Lecture Notes</title>
       
     
     
@@ -91,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#natural-language-generation" class="md-skip">
+        <a href="#reasoning" class="md-skip">
           Skip to content
         </a>
       
@@ -125,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              16. Nature Language Generation
+              23. Reasoning in LLMs
             
           </span>
         </div>
@@ -806,19 +804,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -829,7 +818,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -977,10 +965,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../23_reasoning/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -991,6 +988,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1059,7 +1057,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/nlp/16_nlg.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/23_reasoning.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1068,86 +1066,42 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/nlp/16_nlg.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/23_reasoning.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="natural-language-generation">Natural Language Generation<a class="headerlink" href="#natural-language-generation" title="Permanent link">¶</a></h1>
-<p>Natural Language Generation (NLG) is one of the two primary components of Natural Language Processing (NLP), the other being Natural Language Understanding (NLU). In simple terms:</p>
-<div class="arithmatex">\[
-\text{NLP} = \text{NLU} + \text{NLG}
-\]</div>
-<p>While NLU focuses on interpreting and extracting meaning from human language, NLG is concerned with generating coherent, fluent, and contextually appropriate text intended for human readers.</p>
-<p>Recent advances in deep learning have significantly improved the quality and capabilities of NLG systems, enabling them to produce natural-sounding language across a wide range of applications.</p>
-<h2 id="applications-of-natural-language-generation">Applications of Natural Language Generation<a class="headerlink" href="#applications-of-natural-language-generation" title="Permanent link">¶</a></h2>
-<p>NLG plays a central role in many real-world applications, including:</p>
+<h1 id="reasoning">Reasoning<a class="headerlink" href="#reasoning" title="Permanent link">¶</a></h1>
+<h2 id="what-do-we-mean-by-reasoning">What Do We Mean by “Reasoning”?<a class="headerlink" href="#what-do-we-mean-by-reasoning" title="Permanent link">¶</a></h2>
+<p>Reasoning is the disciplined use of facts and logic to reach new conclusions.</p>
+<ul>
+<li>Deductive reasoning derives conclusions that must be true if the premises are true.</li>
+<li>Inductive reasoning generalises from repeated observations to predict what is likely to hold in future.</li>
+<li>Abductive reasoning infers the most plausible explanation for an observation (“inference to the best explanation”).</li>
+</ul>
+<h2 id="reasoning-in-large-language-models-llms">Reasoning in Large Language Models (LLMs)<a class="headerlink" href="#reasoning-in-large-language-models-llms" title="Permanent link">¶</a></h2>
+<p>Large language models excel at predicting the next token given a context — essentially a massively multivariate pattern-completion task. Whether this <em>is</em> reasoning is an open research question, but several techniques reliably elicit reasoning-like behavior.</p>
+<h3 id="prompt-engineering">Prompt Engineering<a class="headerlink" href="#prompt-engineering" title="Permanent link">¶</a></h3>
+<ul>
+<li>Chain-of-Thought (CoT) prompts append reasoning demonstrations (e.g., "Let's think step-by-step") to encourage the model to reveal latent intermediate states. </li>
+<li>Least-to-Most (LtM) decomposition breaks a hard task into a sequence of smaller sub‑problems; the LLM solves each sub‑problem in order, reducing error accumulation. </li>
+</ul>
+<h3 id="counterfactual-probes">Counterfactual Probes<a class="headerlink" href="#counterfactual-probes" title="Permanent link">¶</a></h3>
+<p>By editing premises and comparing completions, researchers can distinguish memorisation from real generalisation: if the model’s answer tracks the \emph{counterfactual} change, it has formed some causal abstraction rather than merely retrieving training data.</p>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">¶</a></h3>
 <ul>
 <li>
-<p>Machine translation (MT):</p>
-<ul>
-<li>Input: Text in a source language</li>
-<li>Output: Translated text in a target language</li>
-</ul>
+<p>Current LLMs have no explicit logical machinery or world model; apparent <code>logic</code> emerges from statistical correlations. </p>
 </li>
 <li>
-<p>Dialogue systems / digital assistants:</p>
-<ul>
-<li>Input: Dialogue history or user queries</li>
-<li>Output: Text that appropriately continues the conversation</li>
-</ul>
+<p>Faithfulness is not guaranteed: the model may generate fluent but incorrect reasoning chains (hallucinations).</p>
 </li>
 <li>
-<p>Text summarization:</p>
-<ul>
-<li>Input: Long-form documents (e.g., research papers, emails, meeting transcripts)</li>
-<li>Output: Concise and coherent summaries</li>
-</ul>
-</li>
-<li>
-<p>Creative writing and story generation</p>
-</li>
-<li>
-<p>Data-to-text generation:</p>
-<ul>
-<li>Converts structured data (e.g., tables, databases) into natural language reports or descriptions</li>
-</ul>
-</li>
-<li>
-<p>Image and video captioning:</p>
-<ul>
-<li>Generates natural language descriptions based on visual input</li>
-</ul>
+<p>Working memory is finite, so long multi‑step proofs can overflow the context window unless external scratchpads or tool use are provided.</p>
 </li>
 </ul>
-<h2 id="basics-of-natural-language-generation">Basics of Natural Language Generation<a class="headerlink" href="#basics-of-natural-language-generation" title="Permanent link">¶</a></h2>
-<p>Most modern NLG systems rely on autoregressive language models, which generate text one token at a time. At each time step <span class="arithmatex">\(t\)</span>, the model receives the preceding sequence of tokens <span class="arithmatex">\(x_{&lt;t}\)</span> and predicts the next token <span class="arithmatex">\(x_t\)</span>.</p>
-<p>Let <span class="arithmatex">\(f(\cdot)\)</span> denote the model and <span class="arithmatex">\(V\)</span> be the vocabulary. For a given context <span class="arithmatex">\(x_{&lt;t}\)</span>, the model computes a score <span class="arithmatex">\(s_v = f(x_{&lt;t}, v) \in \mathbb{R}\)</span> for each token <span class="arithmatex">\(v \in V\)</span>. These scores are converted into probabilities via the softmax function:</p>
-<div class="arithmatex">\[
-P(x_t = v \mid x_{&lt;t})
-=
-\frac{\exp(s_v)}{\sum_{v' \in V} \exp(s_{v'})}
-\]</div>
-<h3 id="architectures">Architectures<a class="headerlink" href="#architectures" title="Permanent link">¶</a></h3>
-<ul>
-<li>
-<p>Non-open-ended tasks (e.g., machine translation):<br>
-  Typically use an encoder-decoder architecture:</p>
-<ul>
-<li>The encoder (often bidirectional) processes the input</li>
-<li>The decoder (autoregressive) generates output one token at a time</li>
-</ul>
-</li>
-<li>
-<p>Open-ended tasks (e.g., story generation):<br>
-  May rely solely on an autoregressive decoder without a separate encoder</p>
-</li>
-</ul>
-<h3 id="training-objective">Training Objective<a class="headerlink" href="#training-objective" title="Permanent link">¶</a></h3>
-<p>Models are trained using maximum likelihood estimation (MLE), which aims to maximize the probability of each token in the training sequence given its preceding context.</p>
-<p>This is a token-level classification problem and is often trained using a method known as teacher forcing, where at each time step the model receives the true previous token instead of its own prediction. This aligns training conditions with the ground truth.</p>
 
 
 
@@ -1183,7 +1137,7 @@ P(x_t = v \mid x_{&lt;t})
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../15_cot/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 15. Chain of Thought Reasoning">
+          <a href="../22_llm_training_basics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 22. LLM Training Basics">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -1193,27 +1147,11 @@ P(x_t = v \mid x_{&lt;t})
                 Previous
               </span>
               <div class="md-ellipsis">
-                15. Chain of Thought Reasoning
+                22. LLM Training Basics
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../17_imp_nlg/" class="md-footer__link md-footer__link--next" aria-label="Next: 17. Improving Generation and Training for NLG">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                17. Improving Generation and Training for NLG
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
-            </div>
-          </a>
         
       </nav>
     

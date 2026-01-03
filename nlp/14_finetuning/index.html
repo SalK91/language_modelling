@@ -409,6 +409,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -939,6 +943,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../22_llm_training_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    22. LLM Training Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23_reasoning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    23. Reasoning in LLMs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1104,6 +1154,19 @@
 </li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/pretraining_2.png" data-desc-position="bottom"><img alt="LoRA" src="../images/pretraining_2.png"></a></p>
+<p>Location of LoRA:</p>
+<ul>
+<li>Originally proposed in masked multi-head attention matrices.</li>
+<li>Nowadays recommended in the feed-forward layers (after attention)</li>
+</ul>
+<p>Empirical observations with LoRA:</p>
+<ul>
+<li>LoRA needs a higher learning rate than full fine-tuning</li>
+<li>LoRA does poorly on large batch size compared to full fine-tuning</li>
+</ul>
+<h3 id="quantized-lora">Quantized LoRA<a class="headerlink" href="#quantized-lora" title="Permanent link">¶</a></h3>
+<p>QLoRA trains low-rank adapters (LoRA) on top of a 4-bit quantized frozen LLM, keeping the base weights memory-efficient while still allowing learning. The implementation stores the base model in 4-bit NF4 precision and only updates small <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> matrices (LoRA matrices) in full precision. </p>
+<p>Intuition: freeze most of the model to save memory, and let tiny trainable adapters learn task-specific changes without touching the huge pretrained weights.</p>
 <h2 id="empirical-comparison-of-fine-tuning-methods">Empirical Comparison of Fine-tuning Methods<a class="headerlink" href="#empirical-comparison-of-fine-tuning-methods" title="Permanent link">¶</a></h2>
 <table>
 <thead>
