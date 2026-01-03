@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/12_pretraining/">
       
       
+        <link rel="prev" href="../11_tokens/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../13_pretrain_strat/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>12. Pre-training - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#pre-training" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              12. Pre-training
             
           </span>
         </div>
@@ -234,11 +236,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +255,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +343,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +357,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +365,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +418,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +446,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -626,7 +621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -715,10 +710,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -729,6 +733,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -741,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -925,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1009,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/12_pretraining.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1018,62 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/12_pretraining.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="pre-training">Pre-training<a class="headerlink" href="#pre-training" title="Permanent link">¶</a></h1>
+<p>Pretraining refers to learning general-purpose language representations from large amounts of unlabeled text before adapting models to specific tasks. This approach decoupled lexical representation learning from task-specific modeling.</p>
+<h2 id="from-pretrained-embeddings-to-pretrained-models">From Pretrained Embeddings to Pretrained Models<a class="headerlink" href="#from-pretrained-embeddings-to-pretrained-models" title="Permanent link">¶</a></h2>
+<p>Before the rise of large-scale language models, pretraining in NLP primarily focused on static word embeddings such as Word2Vec, GloVe, or FastText. These embeddings provided fixed, context-independent vector representations for each word in the vocabulary, which were then used as input features for downstream models.</p>
+<h3 id="circa-2017-word-embeddings-contextual-models">Circa 2017: Word embeddings + contextual models<a class="headerlink" href="#circa-2017-word-embeddings-contextual-models" title="Permanent link">¶</a></h3>
+<p>A common pipeline during this period combined pretrained embeddings with supervised task-specific models.</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>Begin with pretrained word embeddings (context-agnostic)</li>
+<li>Learn contextualization during supervised training on a downstream task (e.g., sentiment analysis, question answering)</li>
+<li>Recurrent architectures (e.g., LSTMs) or early Transformer variants were used to build task-specific context</li>
+<li>Limitations:<ul>
+<li>Downstream data must be large and diverse enough to teach the model language understanding</li>
+<li>Most model parameters are randomly initialized and trained from scratch</li>
+<li>Inefficient reuse of linguistic knowledge across tasks</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+</li>
+</ul>
+<p>As a result, much of the burden of language understanding was placed on downstream supervision.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/pre_old.png" data-desc-position="bottom"><img alt="Pretrained Embeddings" src="../images/pre_old.png"></a></p>
+<h2 id="modern-paradigm-pretraining-whole-models">Modern Paradigm: Pretraining Whole Models<a class="headerlink" href="#modern-paradigm-pretraining-whole-models" title="Permanent link">¶</a></h2>
+<p>In modern NLP systems, the dominant paradigm has shifted from pretraining isolated components (e.g., word embeddings) to pretraining entire models on unsupervised or self-supervised objectives over massive corpora. These pretrained models are then fine-tuned on specific tasks, often with limited labeled data.</p>
+<p>Key characteristics of whole-model pretraining</p>
+<ul>
+<li>Nearly all model parameters are initialized using large-scale pretraining</li>
+<li>The model is trained on unlabeled text by corrupting the input and optimizing for its reconstruction. </li>
+<li>Common objectives: Different pretraining objectives reflect different modeling assumptions and downstream use cases.<ul>
+<li>Masked language modeling (MLM): Randomly mask tokens and train the model to predict them (e.g., BERT)</li>
+<li>Causal language modeling (CLM): Predict the next token given previous ones (e.g., GPT)</li>
+<li>Permutation-based objectives: Learn to reason over non-sequential token orders (e.g., XLNet)</li>
+</ul>
+</li>
+<li>Models learn:<ul>
+<li>Deep, contextualized representations of language structure and semantics</li>
+<li>Strong priors for downstream task learning via transfer</li>
+<li>Coherent probability distributions over sequences, enabling sampling and generation. These learned representations can be rapidly adapted to new tasks through fine-tuning or prompting.</li>
+</ul>
+</li>
+</ul>
+<h2 id="benefits-of-pretraining">Benefits of Pretraining<a class="headerlink" href="#benefits-of-pretraining" title="Permanent link">¶</a></h2>
+<p>Whole-model pretraining offers several practical and theoretical advantages.</p>
+<ul>
+<li>Data efficiency: Fine-tuning requires significantly fewer task-specific labeled examples</li>
+<li>Robust generalization: Pretrained models capture syntactic, semantic, and world knowledge</li>
+<li>Unified architecture: A single pretrained backbone can be reused across a wide range of tasks, reducing task-specific engineering</li>
+<li>Sampling and generation: Language models trained with causal objectives can be used to generate fluent, coherent text</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/pre_new.png" data-desc-position="bottom"><img alt="Pretraining" src="../images/pre_new.png"></a></p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h2>
+<p>Pretraining has revolutionized NLP by shifting the burden of language understanding from downstream task data to large-scale, general-purpose models. This transition from static embeddings to pretrained Transformers has enabled rapid progress across virtually every NLP benchmark, making pretraining the foundation of modern language understanding and generation systems.</p>
 
 
 
@@ -1065,15 +1108,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../11_tokens/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 11. Tokenization">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                11. Tokenization
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../13_pretrain_strat/" class="md-footer__link md-footer__link--next" aria-label="Next: 13. Pre-training Strategies">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                13. Pre-training Strategies
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1183,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

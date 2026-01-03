@@ -135,3 +135,6 @@ nav:
       - 18. Evaluation of NLU Systems: "nlp/18_eval_nlu.md"
       - 19. Evaluation of NLG Systems: "nlp/19_eval_nlg.md"
       - 20. Post-training: "nlp/20_post_training.md"
+      - 21. Advanced Topics in Language Modelling: "nlp/21_advanced_topics.md"
+      - 22. LLM Training Basics: "nlp/22_llm_training_basics.md"
+      - 23. Reasoning in LLMs: "nlp/23_reasoning.md"

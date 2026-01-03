@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/13_pretrain_strat/">
       
       
+        <link rel="prev" href="../12_pretraining/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../14_finetuning/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>13. Pre-training Strategies - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#13-the-pretraining-strategies" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              13. Pre-training Strategies
             
           </span>
         </div>
@@ -234,11 +236,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +255,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +343,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +357,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +365,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +418,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +446,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -626,7 +621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -738,10 +733,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -752,6 +756,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -764,7 +769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -925,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1009,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/13_pretrain_strat.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1018,162 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/13_pretrain_strat.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="13-the-pretraining-strategies">13. The Pretraining Strategies<a class="headerlink" href="#13-the-pretraining-strategies" title="Permanent link">¶</a></h1>
+<p>This section describes how pretraining objectives differ across encoder, decoder, and encoder–decoder architectures, and why these differences matter.</p>
+<p>The pretraining/fine-tuning paradigm has become the dominant approach in modern NLP. Instead of training models from scratch for every task, we first train a general-purpose language model on a large, unlabeled corpus, and then adapt it to a specific task using a smaller labeled dataset. This approach enables models to transfer general linguistic knowledge learned during pretraining into a wide variety of downstream applications.</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>Step 1: Pretraining — Train on a large-scale unsupervised objective such as language modeling. The model learns broad statistical regularities, syntax, semantics, and even some world knowledge from raw text</li>
+<li>Step 2: Fine-tuning — Adapt the pretrained model to a specific supervised task (e.g., sentiment classification, question answering, named entity recognition) using a smaller, labeled dataset</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/pre_vs_fine.png" data-desc-position="bottom"><img alt="Pretraining and Fine Tuning" src="../images/pre_vs_fine.png"></a></p>
+<p>These two stages decouple language understanding from task-specific supervision. This two-stage procedure has been remarkably effective, especially when labeled data is scarce, as the pretrained model already encodes a strong inductive bias about language.</p>
+<h2 id="why-does-this-work-an-optimization-view">Why Does This Work? An Optimization View<a class="headerlink" href="#why-does-this-work-an-optimization-view" title="Permanent link">¶</a></h2>
+<p>From the perspective of training neural networks with stochastic gradient descent, pretraining provides a highly informative initialization for model parameters.</p>
+<p>Let <span class="arithmatex">\(\mathcal{L}_{\text{pretrain}}(\theta)\)</span> denote the pretraining loss, and let <span class="arithmatex">\(\hat{\theta}\)</span> be the parameters obtained by minimizing this loss:</p>
+<div class="arithmatex">\[
+\hat{\theta} \approx \arg\min_\theta \mathcal{L}_{\text{pretrain}}(\theta)
+\]</div>
+<p>During fine-tuning, we optimize a new task-specific loss <span class="arithmatex">\(\mathcal{L}_{\text{finetune}}(\theta)\)</span>, starting from the pretrained parameters:</p>
+<div class="arithmatex">\[
+\theta^* = \arg\min_\theta \mathcal{L}_{\text{finetune}}(\theta),
+\quad \text{initialized at } \theta = \hat{\theta}
+\]</div>
+<p>This setup offers two complementary advantages:</p>
+<ol>
+<li>
+<p>Good starting point:  The pretrained parameters <span class="arithmatex">\(\hat{\theta}\)</span> already encode general linguistic knowledge, meaning that gradient-based optimization during fine-tuning is more likely to converge quickly and to a good local minimum</p>
+</li>
+<li>
+<p>Better generalization: Due to the geometry of the loss landscape, stochastic gradient descent tends to stay relatively close to <span class="arithmatex">\(\hat{\theta}\)</span>. If the local minima around <span class="arithmatex">\(\hat{\theta}\)</span> are well-aligned with generalization, then the fine-tuned model is more likely to perform well on unseen data</p>
+</li>
+</ol>
+<h2 id="intuition-behind-gradient-propagation">Intuition Behind Gradient Propagation<a class="headerlink" href="#intuition-behind-gradient-propagation" title="Permanent link">¶</a></h2>
+<p>Another benefit is that the gradients of the fine-tuning loss <span class="arithmatex">\(\nabla \mathcal{L}_{\text{finetune}}(\theta)\)</span> often propagate more effectively when <span class="arithmatex">\(\theta\)</span> is initialized at <span class="arithmatex">\(\hat{\theta}\)</span>. Pretraining shapes the model’s representations such that downstream gradients flow through semantically meaningful feature spaces, improving both optimization stability and sample efficiency.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h2>
+<p>The pretraining/fine-tuning paradigm represents a powerful instantiation of transfer learning in NLP. It leverages large-scale unsupervised data to produce models with rich linguistic priors and uses supervised fine-tuning to tailor those priors to task-specific objectives. From both empirical and theoretical perspectives, this strategy enables better generalization, faster convergence, and higher performance across nearly all areas of natural language understanding and generation.</p>
+<h2 id="pretraining-encoder-architectures">Pretraining Encoder Architectures<a class="headerlink" href="#pretraining-encoder-architectures" title="Permanent link">¶</a></h2>
+<p>Transformer-based encoder models, particularly those following the BERT architecture, are pretrained using objectives that leverage the bidirectional nature of attention. Unlike autoregressive language models, which condition only on past tokens, encoder architectures benefit from full left-and-right context, enabling richer and more globally informed token representations.</p>
+<h2 id="masked-language-modeling-mlm">Masked Language Modeling (MLM)<a class="headerlink" href="#masked-language-modeling-mlm" title="Permanent link">¶</a></h2>
+<p>The core idea behind encoder pretraining is the masked language modeling objective. In this setup, a fraction of the input tokens is replaced with a special <code>[MASK]</code> token. The model is then trained to predict the original tokens at these masked positions, conditioning on the surrounding unmasked context. Formally, given an input sequence  <span class="arithmatex">\(x = (w_1, w_2, \dots, w_T)\)</span><br>
+and its corrupted version <span class="arithmatex">\(\tilde{x}\)</span>, the model learns parameters <span class="arithmatex">\(\theta\)</span> that maximize the likelihood <span class="arithmatex">\(p_\theta(x \mid \tilde{x})\)</span>.</p>
+<div class="arithmatex">\[
+\mathbf{h}_1, \dots, \mathbf{h}_T = \text{Encoder}(w_1, \dots, w_T)
+\]</div>
+<div class="arithmatex">\[
+\hat{y}_i \sim \text{softmax}(A \mathbf{h}_i + b),
+\quad \text{for masked positions } i
+\]</div>
+<p>where <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(b\)</span> are learned projection parameters.</p>
+<p>The BERT pretraining procedure masks 15% of tokens according to the following strategy:</p>
+<ul>
+<li>80% of the time, the token is replaced with <code>[MASK]</code></li>
+<li>10% of the time, it is replaced with a random token</li>
+<li>10% of the time, it is left unchanged but still predicted</li>
+</ul>
+<p>This scheme prevents the model from overfitting to the presence of <code>[MASK]</code> tokens and encourages robust representations even for unmasked inputs.</p>
+<h2 id="next-sentence-prediction-nsp">Next Sentence Prediction (NSP)<a class="headerlink" href="#next-sentence-prediction-nsp" title="Permanent link">¶</a></h2>
+<p>In addition to masked language modeling, BERT was originally trained with a binary classification task known as next sentence prediction. Given two input segments, the model predicts whether the second segment follows the first in the original corpus or was randomly sampled. Subsequent studies such as RoBERTa showed that removing NSP can improve downstream performance, suggesting that NSP is not essential.</p>
+<h2 id="advancements-and-variants">Advancements and Variants<a class="headerlink" href="#advancements-and-variants" title="Permanent link">¶</a></h2>
+<p>Numerous refinements to the BERT pretraining methodology have been proposed:</p>
+<ul>
+<li>
+<p>RoBERTa:   Trains longer, on more data, removes NSP, uses dynamic masking and larger batch sizes</p>
+</li>
+<li>
+<p>SpanBERT:  Masks contiguous spans of tokens instead of individual ones, promoting span-level representations</p>
+</li>
+</ul>
+<h2 id="limitations-of-encoder-only-pretraining">Limitations of Encoder-Only Pretraining<a class="headerlink" href="#limitations-of-encoder-only-pretraining" title="Permanent link">¶</a></h2>
+<p>While encoder models like BERT excel at understanding and classification tasks (e.g., sentiment analysis, QA), they are not directly suited for sequence generation due to their non-autoregressive architecture. For tasks requiring fluent text generation (e.g., summarization, translation), decoder-based or encoder-decoder models are more appropriate. Nonetheless, pretrained encoders remain foundational across a wide array of NLP applications due to their strong contextual representations and adaptability to fine-tuning for downstream tasks.</p>
+<h2 id="pretraining-encoderdecoder-architectures">Pretraining Encoder–Decoder Architectures<a class="headerlink" href="#pretraining-encoderdecoder-architectures" title="Permanent link">¶</a></h2>
+<p>Encoder–decoder models combine the strengths of both architectures: the encoder produces rich, bidirectional representations of input sequences, while the decoder performs autoregressive generation conditioned on these representations. This architecture is particularly well-suited for sequence-to-sequence tasks such as machine translation, summarization, and question answering.</p>
+<h2 id="why-use-encoderdecoder-models">Why Use Encoder–Decoder Models?<a class="headerlink" href="#why-use-encoderdecoder-models" title="Permanent link">¶</a></h2>
+<ul>
+<li>Encoders build contextual representations using bidirectional attention</li>
+<li>Decoders enable autoregressive generation conditioned on encoded input and past outputs</li>
+<li>Encoder–decoder models enable powerful conditional generation while leveraging deep understanding of the input.</li>
+</ul>
+<h2 id="pretraining-strategy-language-modeling-with-encoders">Pretraining Strategy: Language Modeling with Encoders<a class="headerlink" href="#pretraining-strategy-language-modeling-with-encoders" title="Permanent link">¶</a></h2>
+<p>A naive extension of language modeling to encoder–decoder architectures splits the input sequence:</p>
+<ul>
+<li>A prefix of the input (e.g., tokens <span class="arithmatex">\(w_1, \dots, w_T\)</span>) is passed to the encoder.</li>
+<li>The decoder autoregressively generates the continuation</li>
+</ul>
+<div class="arithmatex">\[
+\mathbf{h}_{1:T} = \text{Encoder}(w_{1:T}), \quad
+\mathbf{h}_{T+1:T'} = \text{Decoder}(w_{1:T'}, \mathbf{h}_{1:T})
+\]</div>
+<div class="arithmatex">\[
+P(y_i) \sim \text{softmax}(\mathbf{A}\mathbf{h}_i + \mathbf{b}), \quad i &gt; T
+\]</div>
+<p>This allows the encoder to learn bidirectional features while enabling the decoder to condition on them during generation. However, more specialized objectives have shown better performance.</p>
+<h2 id="span-corruption-the-t5-objective">Span Corruption: The T5 Objective<a class="headerlink" href="#span-corruption-the-t5-objective" title="Permanent link">¶</a></h2>
+<p>Span corruption is the core pretraining objective of the T5 model. Random spans of text are removed from the input and replaced with unique sentinel tokens such as <code>&lt;extra_id_0&gt;</code>. The decoder is trained to reconstruct the missing spans.</p>
+<ul>
+<li>Random spans of text are removed from the input</li>
+<li>Each removed span is replaced with a unique sentinel token (e.g., <code>&lt;extra_id_0&gt;</code>).</li>
+<li>The model is trained to reconstruct the missing spans from these placeholders.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/span_corruption.png" data-desc-position="bottom"><img alt="Span Corruption" src="../images/span_corruption.png"></a></p>
+<p>Example:</p>
+<ul>
+<li>Input: <code>The quick &lt;extra_id_0&gt; fox jumps &lt;extra_id_1&gt; the lazy dog.</code></li>
+<li>Target: <code>&lt;extra_id_0&gt; brown &lt;extra_id_1&gt; over &lt;extra_id_2&gt;</code></li>
+</ul>
+<p>Advantages:</p>
+<ul>
+<li>The encoder benefits from full bidirectional context (unlike standard causal models).</li>
+<li>The decoder is trained autoregressively, generating spans conditioned on encoder output.</li>
+<li>The objective is implemented via input preprocessing; the model learns a language modeling task at the decoder side.</li>
+</ul>
+<h2 id="summary_1">Summary<a class="headerlink" href="#summary_1" title="Permanent link">¶</a></h2>
+<p>Encoder–decoder pretraining balances bidirectional representation learning (via the encoder) with generative capability (via the decoder). Span corruption, as implemented in T5, has emerged as a highly effective strategy. It produces models that generalize well across a wide range of NLP tasks and are compatible with the "text-to-text" paradigm.</p>
+<h2 id="pretraining-decoder-architectures">Pretraining Decoder Architectures<a class="headerlink" href="#pretraining-decoder-architectures" title="Permanent link">¶</a></h2>
+<p>Decoder-only language models have emerged as a central architecture in modern NLP, particularly for tasks involving natural language generation. These models are pretrained autoregressively to maximize the likelihood of the next token conditioned on previous tokens:</p>
+<div class="arithmatex">\[
+p_\theta(w_t \mid w_{1:t-1})
+\]</div>
+<p>typically using causal (left-to-right) self-attention to ensure that each token only attends to its left context. This setup enables decoders to learn rich, context-sensitive representations suitable for both generation and classification tasks.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/decoder_pre.png" data-desc-position="bottom"><img alt="Decoder Pretraining" src="../images/decoder_pre.png"></a></p>
+<h2 id="representation-learning-for-classification">Representation Learning for Classification<a class="headerlink" href="#representation-learning-for-classification" title="Permanent link">¶</a></h2>
+<p>Despite being trained for generation, pretrained decoders can be repurposed for classification tasks by leveraging their hidden representations. A common approach is to use the final token's hidden state <span class="arithmatex">\(h_T\)</span> as a summary of the sequence and apply a linear classifier on top:</p>
+<div class="arithmatex">\[
+h_1, \dots, h_T = \text{Decoder}(w_1, \dots, w_T)
+\]</div>
+<div class="arithmatex">\[
+y \sim \text{softmax}(A h_T + b)
+\]</div>
+<p>where <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(b\)</span> are task-specific parameters initialized randomly and optimized during finetuning. Importantly, gradients are backpropagated through the entire decoder, enabling the model to adapt its internal representations to the downstream task.</p>
+<h2 id="sequence-generation-via-pretrained-decoders">Sequence Generation via Pretrained Decoders<a class="headerlink" href="#sequence-generation-via-pretrained-decoders" title="Permanent link">¶</a></h2>
+<p>In generation settings, decoder models are used directly in the autoregressive manner in which they were pretrained. At each timestep, the decoder produces a distribution over the next token given the previously generated tokens:</p>
+<div class="arithmatex">\[
+h_1, \dots, h_{t-1} = \text{Decoder}(w_1, \dots, w_{t-1})
+\]</div>
+<div class="arithmatex">\[
+w_t \sim \text{softmax}(A h_{t-1} + b)
+\]</div>
+<p>Here, <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(b\)</span> represent the output projection matrix and bias that were learned during pretraining. In many applications, these parameters are reused without modification; however, they may also be further finetuned alongside the decoder, depending on the task and data availability.</p>
+<p>This generation paradigm is particularly effective for tasks such as:</p>
+<ul>
+<li>Dialogue modeling: where the decoder generates a response conditioned on the prior dialogue history.</li>
+<li>Summarization: where the decoder generates a summary conditioned on a document input.</li>
+</ul>
+<h2 id="architectural-context-and-transferability">Architectural Context and Transferability<a class="headerlink" href="#architectural-context-and-transferability" title="Permanent link">¶</a></h2>
+<p>Decoder-only models differ from encoder-decoder architectures (e.g., T5) in that they do not encode the input with a separate encoder. Instead, all information is processed through the decoder itself. This simplicity enables direct reuse of the pretrained decoder for diverse tasks with minimal architectural modification.</p>
+<p>Pretraining provides:</p>
+<ul>
+<li>Transferability: Learned representations encode rich syntactic, semantic, and factual knowledge that generalize well across tasks.</li>
+<li>Architectural reuse: The same pretrained model can support both classification and generation, reducing deployment complexity.</li>
+<li>Scalability: Autoregressive training benefits from large-scale data and scales effectively with model size.</li>
+</ul>
+<p>Pretrained decoder architectures, as used in models such as GPT-2, GPT-3, and LLaMA, have demonstrated remarkable performance across a wide range of NLP benchmarks, confirming the utility of this simple yet powerful design.</p>
 
 
 
@@ -1065,15 +1208,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../12_pretraining/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 12. Pre-training">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                12. Pre-training
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../14_finetuning/" class="md-footer__link md-footer__link--next" aria-label="Next: 14. Fine-tuning">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                14. Fine-tuning
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1283,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

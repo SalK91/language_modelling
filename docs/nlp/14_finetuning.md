@@ -73,6 +73,23 @@ LoRA learns a low-rank decomposition of the difference between pretrained and fi
 
 ![LoRA](images/pretraining_2.png)
 
+Location of LoRA:
+
+ - Originally proposed in masked multi-head attention matrices.
+ - Nowadays recommended in the feed-forward layers (after attention)
+
+Empirical observations with LoRA:
+
+- LoRA needs a higher learning rate than full fine-tuning
+- LoRA does poorly on large batch size compared to full fine-tuning
+
+
+### Quantized LoRA
+
+QLoRA trains low-rank adapters (LoRA) on top of a 4-bit quantized frozen LLM, keeping the base weights memory-efficient while still allowing learning. The implementation stores the base model in 4-bit NF4 precision and only updates small $A$ and $B$ matrices (LoRA matrices) in full precision. 
+
+Intuition: freeze most of the model to save memory, and let tiny trainable adapters learn task-specific changes without touching the huge pretrained weights.
+
 ## Empirical Comparison of Fine-tuning Methods
 
 | Method            | Trainable Params | GPU Memory | Performance     | Stability                     |

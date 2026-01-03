@@ -9,26 +9,26 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/21_advanced_topics/">
+      
+      
+        <link rel="prev" href="../20_post_training/">
       
       
       
-        <link rel="next" href="nlp/1_intro/">
-      
-      
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>21. Advanced Topics in Language Modelling - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +47,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#advanced-topics-in-language-modelling" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +103,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              21. Advanced Topics in Language Modelling
             
           </span>
         </div>
@@ -234,11 +234,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +253,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +279,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +314,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +341,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +355,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +363,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +416,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +444,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -626,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -741,7 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -922,10 +915,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -936,6 +938,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -955,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1007,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/21_advanced_topics.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1016,248 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/21_advanced_topics.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="advanced-topics-in-language-modelling">Advanced Topics in Language Modelling<a class="headerlink" href="#advanced-topics-in-language-modelling" title="Permanent link">¶</a></h1>
+<h2 id="knowledge-distillation-for-language-models">Knowledge Distillation for Language Models<a class="headerlink" href="#knowledge-distillation-for-language-models" title="Permanent link">¶</a></h2>
+<p>Knowledge distillation is a model compression and capability transfer technique in NLP and LLMs that trains a compact student model to approximate a high-capacity teacher model. Instead of learning only from one-hot labels, the student also learns from the teacher’s soft predictive distribution and, optionally, its intermediate reasoning samples, improving both generalization and reliability while reducing inference cost.</p>
+<h3 id="teacher-and-student-distributions">Teacher and Student Distributions<a class="headerlink" href="#teacher-and-student-distributions" title="Permanent link">¶</a></h3>
+<p>Given input <span class="arithmatex">\(x\)</span>, the teacher outputs logits <span class="arithmatex">\(z_t \in \mathbb{R}^{|V|}\)</span> over vocabulary <span class="arithmatex">\(V\)</span>. A temperature-scaled softmax produces softened probabilities:</p>
+<div class="arithmatex">\[
+p_t^T = softmax(z_t / T), \quad T &gt; 1
+\]</div>
+<p>The student model generates its own logits <span class="arithmatex">\(z_s\)</span> and corresponding distribution:</p>
+<div class="arithmatex">\[
+p_s^T = softmax(z_s / T)
+\]</div>
+<p>When <span class="arithmatex">\(T &gt; 1\)</span>, distributions become smoother, exposing relationships between alternative token choices. This is critical for multi-step reasoning, where each token builds on implicit intermediate deductions. Distillation transfers not only correct answers but also richer decision structure and uncertainty.</p>
+<h3 id="distillation-loss">Distillation Loss<a class="headerlink" href="#distillation-loss" title="Permanent link">¶</a></h3>
+<p>Training minimizes a weighted objective balancing:</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>Correctness using cross-entropy with ground truth <span class="arithmatex">\(y\)</span></li>
+<li>Imitation using KL divergence between teacher and student distributions</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<p>Loss formulation:</p>
+<div class="arithmatex">\[
+L = \alpha T^2 \, KL(p_t^T \| p_s^T) + (1 - \alpha) \, CE(y, softmax(z_s))
+\]</div>
+<p>Where:</p>
+<div class="arithmatex">\[
+KL(p \| q) = \sum_i p_i \log \frac{p_i}{q_i}
+\]</div>
+<p>The term <span class="arithmatex">\(T^2\)</span> rescales gradients to preserve signal magnitude when using high temperature, preventing vanishing updates.</p>
+<h3 id="representation-alignment-encoder-models">Representation Alignment (Encoder Models)<a class="headerlink" href="#representation-alignment-encoder-models" title="Permanent link">¶</a></h3>
+<p>For encoder models, teacher and student hidden states <span class="arithmatex">\(h_t\)</span> and <span class="arithmatex">\(h_s\)</span> may differ in size. A learned projector <span class="arithmatex">\(W\)</span> aligns them:</p>
+<div class="arithmatex">\[
+L_{rep} = MSE(h_t W, h_s)
+\]</div>
+<p>Alternative alignment objectives include cosine similarity or attention map matching across selected layers <span class="arithmatex">\(\mathcal{L}_k\)</span>.</p>
+<h3 id="distillation-algorithm">Distillation Algorithm<a class="headerlink" href="#distillation-algorithm" title="Permanent link">¶</a></h3>
+<h4 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">¶</a></h4>
+<ul>
+<li>Teacher Model: Large LM (e.g., 3.7B–175B parameters)</li>
+<li>Student Model: Smaller LM (e.g., 125M–1.3B parameters)</li>
+<li>Training Inputs: <span class="arithmatex">\(\mathcal{D}_{Train} = \{x_i\}\)</span></li>
+<li>Prompt Set: <span class="arithmatex">\(P = \{(x_i, y_i, z_i)\}\)</span> where <span class="arithmatex">\(z_i\)</span> are teacher reasoning samples</li>
+</ul>
+<h4 id="sampling-process">Sampling Process<a class="headerlink" href="#sampling-process" title="Permanent link">¶</a></h4>
+<p>For each example <span class="arithmatex">\(x_i\)</span>:</p>
+<ol>
+<li>Sample <span class="arithmatex">\(N\)</span> teacher reasoning–prediction pairs:
+   <script type="math/tex; mode=display">
+   (\hat{y}_i, \hat{z}_i) \sim \mathcal{N}_T(y_i, z_i \mid x_i, P)
+   </script>
+</li>
+<li>Construct sample set:
+   <script type="math/tex; mode=display">
+   P_i = \{(x_i, \hat{z}_i^j, \hat{y}_i^j)\}_{j=1}^N
+   </script>
+</li>
+<li>Typical setting:
+   <script type="math/tex; mode=display">
+   N = 30
+   </script>
+</li>
+</ol>
+<p>Create corpus:</p>
+<div class="arithmatex">\[
+C = \{(x_i, (\hat{z}_i^j, \hat{y}_i^j))\}_{j=1}^N
+\]</div>
+<h4 id="training-process">Training Process<a class="headerlink" href="#training-process" title="Permanent link">¶</a></h4>
+<p>Train student on teacher samples using LM objective:</p>
+<div class="arithmatex">\[
+L(z_s, y_s \mid C) = CE(\hat{y}_i^j, \hat{z}_i^j \mid x_i)
+\]</div>
+<p>This objective integrates into the full distillation loss defined earlier.</p>
+<h4 id="evaluation-options">Evaluation Options<a class="headerlink" href="#evaluation-options" title="Permanent link">¶</a></h4>
+<p>After training, evaluate output quality using:</p>
+<ul>
+<li>
+<p>Greedy Decoding
+  <script type="math/tex; mode=display">
+  (\hat{z}_{test}, \hat{y}_{test}) = argmax_{z_s} \mathcal{S}(y \mid z_t)
+  </script>
+</p>
+</li>
+<li>
+<p>Self-Consistency
+  <script type="math/tex; mode=display">
+  \hat{y}_{test} = argmax_y \, \mathbb{E}_{z_s \sim \mathcal{S}_{top-k}} [\mathcal{S}(y \mid z_s, z_{test})]
+  </script>
+</p>
+</li>
+</ul>
+<h4 id="optional-generative-extension-sample-and-rank">Optional Generative Extension: Sample-and-Rank<a class="headerlink" href="#optional-generative-extension-sample-and-rank" title="Permanent link">¶</a></h4>
+<ol>
+<li>Sample <span class="arithmatex">\(n\)</span> teacher completions per prompt</li>
+<li>Score using reward model or teacher log-likelihood</li>
+<li>Select top-<span class="arithmatex">\(k\)</span> sequences <span class="arithmatex">\(\mathcal{S}_{top}\)</span></li>
+<li>Train student via:</li>
+<li><span class="arithmatex">\(CE(\mathcal{S}_{top}, p_{student})\)</span>, or</li>
+<li>policy distillation on teacher action distributions</li>
+</ol>
+<hr>
+<h2 id="mixture-of-experts">Mixture of Experts<a class="headerlink" href="#mixture-of-experts" title="Permanent link">¶</a></h2>
+<p>In LLMs and NLP, mixture of experts (MoE) replaces dense feed-forward layers with a set of expert networks <span class="arithmatex">\(\{E_1, ..., E_N\}\)</span> and a router <span class="arithmatex">\(G\)</span> that selects a sparse subset of experts per token. Given input representation <span class="arithmatex">\(h\)</span>, the router outputs gating logits <span class="arithmatex">\(r = G(h)\)</span> and expert selection is typically top-<span class="arithmatex">\(k\)</span>:</p>
+<div class="arithmatex">\[
+g_i = softmax(r)_i,\quad \mathcal{I} = topk(r, k)
+\]</div>
+<p>Only experts in <span class="arithmatex">\(\mathcal{I}\)</span> are executed, producing <span class="arithmatex">\(e_i = E_i(h)\)</span>, and the MoE layer output is:</p>
+<div class="arithmatex">\[
+y = \sum_{i \in \mathcal{I}} g_i \, e_i
+\]</div>
+<p>Training minimizes the task loss <span class="arithmatex">\(L_{task}\)</span> (e.g., next-token cross-entropy) plus auxiliary load-balancing and routing regularization to prevent expert collapse and imbalance. A common load-balancing loss uses batch-level expert utilization <span class="arithmatex">\(f_i\)</span> and mean gate probability <span class="arithmatex">\(\bar{g}_i\)</span>:</p>
+<div class="arithmatex">\[
+L = L_{task} + \lambda \sum_{i=1}^N f_i \cdot \bar{g}_i
+\]</div>
+<p>Alternative formulations use entropy bonuses on <span class="arithmatex">\(g\)</span>, z-loss on router logits, or differentiable routing approximations.</p>
+<p>Algorithm steps:</p>
+<ol>
+<li>Replace MLP layers with MoE block containing <span class="arithmatex">\(N\)</span> experts and router <span class="arithmatex">\(G\)</span>.</li>
+<li>For each token, compute router logits <span class="arithmatex">\(r = G(h)\)</span>.</li>
+<li>Select expert indices <span class="arithmatex">\(\mathcal{I} = topk(r, k)\)</span>.</li>
+<li>Compute gates <span class="arithmatex">\(g_i = softmax(r)_i\)</span> for <span class="arithmatex">\(i \in \mathcal{I}\)</span>.</li>
+<li>Execute selected experts <span class="arithmatex">\(e_i = E_i(h)\)</span>.</li>
+<li>Aggregate <span class="arithmatex">\(y = \sum_{i \in \mathcal{I}} g_i \, e_i\)</span>.</li>
+<li>Compute loss <span class="arithmatex">\(L = L_{task} + L_{aux}\)</span> and backprop to student and router.</li>
+<li>Optionally apply capacity limits per expert, expert dropout, router jitter noise, or switch to single-expert routing (top-1) variants.</li>
+</ol>
+<p>Efficiency note: MoE increases parameter count while reducing per-token FLOPs via sparse routing, improving scaling at controlled inference cost.</p>
+<hr>
+<h2 id="predicting-the-next-token-in-language-models">Predicting the Next Token in Language Models<a class="headerlink" href="#predicting-the-next-token-in-language-models" title="Permanent link">¶</a></h2>
+<ol>
+<li>
+<p>Greedy Decoding: Greedy decoding selects the token with the highest predicted probability at each step: </p>
+<div class="arithmatex">\[x_{t+1} = \arg\max_{x} \, p(x \mid x_{1:t})\]</div>
+<p>While simple and efficient, it often produces suboptimal sequences that are repetitive, lack diversity, or fail to capture long-range coherence, since it ignores alternative plausible continuations.</p>
+</li>
+<li>
+<p>Beam Search: Beam search maintains the top-<span class="arithmatex">\(k\)</span> most probable partial sequences (beams) at each timestep. The algorithm expands each beam with all possible next tokens, retains the <span class="arithmatex">\(k\)</span> highest-scoring sequences, and repeats until termination. Benefits include higher likelihood sequences compared to greedy decoding, but beam search increases computational cost and can still lack diversity, often producing deterministic or generic outputs if the beam width is small or length penalties are not applied.</p>
+</li>
+<li>
+<p>Sampling-Based Decoding: Sampling introduces stochasticity to token selection, enabling more diverse and natural outputs. Common strategies include:  </p>
+<ul>
+<li>
+<p>Top-<span class="arithmatex">\(k\)</span> sampling: Restrict the candidate set to the <span class="arithmatex">\(k\)</span> most probable tokens and sample according to their normalized probabilities.  </p>
+<div class="arithmatex">\[p'(x \mid x_{1:t}) = \frac{p(x \mid x_{1:t})}{\sum_{i \in topk} p(i \mid x_{1:t})}, \quad x \sim p'\]</div>
+</li>
+<li>
+<p>Top-<span class="arithmatex">\(p\)</span> (nucleus) sampling: Select the smallest set of tokens whose cumulative probability exceeds a threshold <span class="arithmatex">\(p\)</span> and sample from this set.  </p>
+<div class="arithmatex">\[\mathcal{V}_p = \min \{V' \mid \sum_{i \in V'} p(i \mid x_{1:t}) \ge p \}, \quad x \sim p(i \mid i \in \mathcal{V}_p)\]</div>
+</li>
+<li>
+<p>Temperature scaling: Adjusts the sharpness of the predicted distribution to control randomness:  </p>
+</li>
+</ul>
+<div class="arithmatex">\[p_T(x \mid x_{1:t}) = softmax \left( \frac{\log p(x \mid x_{1:t})}{T} \right)\]</div>
+<p>Low temperatures (<span class="arithmatex">\(T&lt;1\)</span>) make the distribution peakier, favoring high-probability tokens and reducing diversity. High temperatures (<span class="arithmatex">\(T&gt;1\)</span>) flatten the distribution, increasing randomness and creative outputs.</p>
+</li>
+</ol>
+<p>Overall, the choice of decoding strategy involves a tradeoff between likelihood, diversity, and computational efficiency. Greedy and beam search optimize for probability, whereas sampling-based methods enhance diversity and naturalness in generated text.</p>
+<hr>
+<h2 id="inference-optimization-in-llms">Inference Optimization in LLMs<a class="headerlink" href="#inference-optimization-in-llms" title="Permanent link">¶</a></h2>
+<h3 id="kv-caching">KV caching<a class="headerlink" href="#kv-caching" title="Permanent link">¶</a></h3>
+<p>In autoregressive transformers, each new token attends to all prior tokens. Instead of recomputing past key/value projections, we cache them. For token step <span class="arithmatex">\(t\)</span>, the attention computation becomes:</p>
+<div class="arithmatex">\[
+Q_t = W_Q h_t,\quad K_{1:t} = [K_{cache}; W_K h_t],\quad V_{1:t} = [V_{cache}; W_V h_t]
+\]</div>
+<div class="arithmatex">\[
+A_t = softmax\left(\frac{Q_t K_{1:t}^\top}{\sqrt{d_k}}\right) V_{1:t}
+\]</div>
+<p>The cache stores <span class="arithmatex">\((K_{1:t-1}, V_{1:t-1})\)</span> from earlier steps. This reduces per-token FLOPs from <span class="arithmatex">\(O(t)\)</span> to <span class="arithmatex">\(O(1)\)</span> for projections, leaving only the attention dot product with cached states. Latency improves significantly for long contexts, at the cost of <span class="arithmatex">\(O(n_{layers} · seq_{len} · d_{kv})\)</span> memory.</p>
+<p>Algorithm steps:</p>
+<ol>
+<li>For each layer, compute <span class="arithmatex">\(K = W_K h, V = W_V h\)</span> for prompt tokens.</li>
+<li>Store <span class="arithmatex">\((K, V)\)</span> in cache.</li>
+<li>During generation, compute only <span class="arithmatex">\(K_t, V_t\)</span> for the new token.</li>
+<li>Append to cache and attend using the full cached <span class="arithmatex">\(K, V\)</span>.</li>
+</ol>
+<h3 id="multi-query-attention-mqa-and-grouped-query-attention-gqa">Multi-Query Attention (MQA) and Grouped-Query Attention (GQA)<a class="headerlink" href="#multi-query-attention-mqa-and-grouped-query-attention-gqa" title="Permanent link">¶</a></h3>
+<p>MQA shares a single key/value head across all query heads, reducing memory and bandwidth:</p>
+<p>
+<script type="math/tex; mode=display">
+   K = W_K h,\quad V = W_V h \quad \text{(1 shared head)}
+   </script>
+</p>
+<p>All query heads attend to the same <span class="arithmatex">\(K, V\)</span>. This cuts cache size by <span class="arithmatex">\(h\)</span>× (number of Q heads).<br>
+   GQA generalizes this by sharing <span class="arithmatex">\(K, V\)</span> across groups of query heads:</p>
+<p>
+<script type="math/tex; mode=display">
+   \mathcal{G}_j = \{Q_{j,1},...,Q_{j,m}\},\quad K_j, V_j \text{ shared per group}
+   </script>
+</p>
+<p>If there are <span class="arithmatex">\(h_q\)</span> query heads and <span class="arithmatex">\(h_{kv}\)</span> KV heads, each KV head serves <span class="arithmatex">\(h_q / h_{kv}\)</span> query heads. GQA balances quality and efficiency better than full sharing (MQA) while still reducing memory bandwidth and cache footprint.</p>
+<p>Benefits:</p>
+<ul>
+<li>Smaller KV cache (<span class="arithmatex">\(↓\)</span> memory, <span class="arithmatex">\(↓\)</span> GPU bandwidth pressure)</li>
+<li>Faster decoding, especially in memory-bound regimes</li>
+<li>Better quality than MQA when <span class="arithmatex">\(h_{kv} &gt; 1\)</span></li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>Some capacity loss from reduced key/value specialization</li>
+<li>Requires careful grouping choice to avoid quality drop</li>
+</ul>
+<h3 id="pagedattention">PagedAttention<a class="headerlink" href="#pagedattention" title="Permanent link">¶</a></h3>
+<p>Standard KV caches allocate contiguous memory per sequence, causing fragmentation and over-allocation when sequences vary in length. PagedAttention stores KV blocks in fixed-size pages (like virtual memory), allowing non-contiguous storage:</p>
+<p>Idea:</p>
+<ul>
+<li>Preallocate memory into pages of size <span class="arithmatex">\(P\)</span>.</li>
+<li>Store <span class="arithmatex">\((K, V)\)</span> in page slots, not one long tensor.</li>
+<li>Map logical token positions → physical page addresses.</li>
+</ul>
+<p>Memory model:</p>
+<p>
+<script type="math/tex; mode=display">
+   (K, V)_{layer} \in \mathbb{R}^{n_{pages} × P × d_{kv}}
+   </script>
+</p>
+<p>Attention reads KV by gathering relevant pages:</p>
+<p>
+<script type="math/tex; mode=display">
+   A_t = softmax\left(\frac{Q_t K_{pages}^\top}{\sqrt{d_k}}\right) V_{pages}
+   </script>
+</p>
+<p>Benefits:</p>
+<ul>
+<li>Eliminates wasted padding memory</li>
+<li>Enables large-batch serving without OOM</li>
+<li>Efficient for dynamic and very long contexts</li>
+<li>Reduces fragmentation and improves throughput</li>
+</ul>
+<p>Algorithm steps:</p>
+<ol>
+<li>Partition prompt tokens into pages of length <span class="arithmatex">\(P\)</span>.</li>
+<li>Store each page’s <span class="arithmatex">\(K, V\)</span> into free page slots.</li>
+<li>Maintain a page table mapping token index → page slot.</li>
+<li>During decoding, gather only required pages for attention.</li>
+<li>Append new token KV into next free page.</li>
+</ol>
 
 
 
@@ -1065,22 +1292,22 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
-        
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                1. NLP an introduction
-              </div>
-            </div>
+          <a href="../20_post_training/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 20. Post-training">
             <div class="md-footer__button md-icon">
               
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                20. Post-training
+              </div>
             </div>
           </a>
+        
         
       </nav>
     
@@ -1124,12 +1351,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

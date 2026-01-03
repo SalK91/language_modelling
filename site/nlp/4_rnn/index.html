@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/4_rnn/">
       
       
+        <link rel="prev" href="../3_nn/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../5_lstm/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>4. Recurrent Neural Networks - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -88,11 +90,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#lectures-on-language-modelling" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +100,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              4. Recurrent Neural Networks
             
           </span>
         </div>
@@ -234,11 +231,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +250,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +276,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +311,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +338,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +352,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +360,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +413,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +441,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -531,10 +521,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -545,6 +542,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -557,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -626,7 +624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +647,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -741,7 +739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +808,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +854,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -925,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -987,8 +985,6 @@
   
   
   
-    
-  
   
 </nav>
                   </div>
@@ -1004,7 +1000,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/4_rnn.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1009,198 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/4_rnn.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+  <h1>4. Recurrent Neural Networks</h1>
+
+<h2 id="chapter-4-recurrent-neural-networks">Chapter 4: Recurrent Neural Networks<a class="headerlink" href="#chapter-4-recurrent-neural-networks" title="Permanent link">¶</a></h2>
+<p>Unlike traditional language models that condition on a fixed-size window of previous tokens, RNNs are capable of conditioning on the entire history of previous tokens.</p>
+<p>This is achieved by maintaining a recurrent hidden state that summarizes past information and is updated at every time-step.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/rnn_3step.png" data-desc-position="bottom"><img alt="A Recurrent Neural Network" src="../images/rnn_3step.png"></a></p>
+<h2 id="rnn-architecture">RNN Architecture<a class="headerlink" href="#rnn-architecture" title="Permanent link">¶</a></h2>
+<p>The RNN architecture (Figure above) shows three time-steps. Each hidden layer at time-step <span class="arithmatex">\(t\)</span> receives two inputs:</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>The input vector at time <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(x_t\)</span></li>
+<li>The hidden state from the previous time-step, <span class="arithmatex">\(h_{t-1}\)</span></li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<p>These are combined using weights <span class="arithmatex">\(W_{hh}\)</span> and <span class="arithmatex">\(W_{hx}\)</span>:</p>
+<div class="arithmatex">\[
+h_t = \sigma(W_{hh} h_{t-1} + W_{hx} x_t + b_1)
+\]</div>
+<p>The hidden state <span class="arithmatex">\(h_t\)</span> acts as a continuous memory vector that compresses information from all previous inputs <span class="arithmatex">\(x_1, \dots, x_t\)</span>.</p>
+<p>The output is calculated as:</p>
+<div class="arithmatex">\[
+\hat{y}_t = \text{softmax}(W_S h_t + b_2)
+\]</div>
+<p>Key parameters:</p>
+<ul>
+<li><span class="arithmatex">\(x_t \in \mathbb{R}^d\)</span>: Input word vector  </li>
+<li><span class="arithmatex">\(W_{hx} \in \mathbb{R}^{D_h \times d}\)</span>: Input weight matrix  </li>
+<li><span class="arithmatex">\(W_{hh} \in \mathbb{R}^{D_h \times D_h}\)</span>: Hidden state weight matrix  </li>
+<li><span class="arithmatex">\(W_S \in \mathbb{R}^{|V| \times D_h}\)</span>: Output weight matrix  </li>
+<li><span class="arithmatex">\(\sigma\)</span>: Non-linear function such as tanh  </li>
+<li><span class="arithmatex">\(\hat{y}_t \in \mathbb{R}^{|V|}\)</span>: Probability distribution over vocabulary  </li>
+</ul>
+<h2 id="training-an-rnn-language-model">Training an RNN Language Model<a class="headerlink" href="#training-an-rnn-language-model" title="Permanent link">¶</a></h2>
+<p>To train a Recurrent Neural Network Language Model (RNN-LM), we begin with a large corpus of text, represented as a sequence of word tokens. The model is trained to predict the next word at each time-step, given all preceding words in the sequence.</p>
+<p>At each time-step <span class="arithmatex">\(t\)</span>:</p>
+<ul>
+<li>The model receives an input vector <span class="arithmatex">\(x_t\)</span> and computes a hidden state <span class="arithmatex">\(h_t\)</span> using the current input and the previous hidden state <span class="arithmatex">\(h_{t-1}\)</span>.</li>
+<li>The output layer produces a probability distribution <span class="arithmatex">\(\hat{y}_t\)</span> over the vocabulary.</li>
+<li>The cross-entropy loss is computed between <span class="arithmatex">\(\hat{y}_t\)</span> and the ground-truth one-hot vector <span class="arithmatex">\(y_t\)</span>.</li>
+</ul>
+<p>Training an RNN language model corresponds to maximizing the log-likelihood of the observed sequence:</p>
+<div class="arithmatex">\[\log P(x_1, \ldots, x_T)
+= \sum_{t=1}^{T} \log P\!\left(x_{t+1} \mid x_1, \ldots, x_t\right)\]</div>
+<p>The total training objective is to minimize the average cross-entropy loss across all time-steps and sequences in the training set.</p>
+<div class="arithmatex">\[
+J^{(t)}(\theta) = -\sum_{j=1}^{|V|} y_{t,j} \log \hat{y}_{t,j}
+\]</div>
+<h3 id="teacher-forcing">Teacher Forcing<a class="headerlink" href="#teacher-forcing" title="Permanent link">¶</a></h3>
+<p>During training, a technique called teacher forcing is commonly used. Instead of feeding the model’s own prediction <span class="arithmatex">\(\hat{y}_{t-1}\)</span> as input at the next time-step, we use the ground-truth word <span class="arithmatex">\(y_{t-1}\)</span>. This stabilizes and accelerates learning by preventing the model from compounding its own mistakes during early training. However, it introduces a discrepancy between training and inference, known as exposure bias, since the model must rely on its own predictions at test time. Exposure bias becomes more pronounced for long sequences, where early prediction errors can cascade through the remainder of the sequence.</p>
+<h3 id="backpropagation-through-time">Backpropagation Through Time<a class="headerlink" href="#backpropagation-through-time" title="Permanent link">¶</a></h3>
+<p>Training an RNN requires computing gradients over sequences of time-dependent operations. This is done using Backpropagation Through Time (BPTT):</p>
+<ul>
+<li>The RNN is unrolled over <span class="arithmatex">\(T\)</span> time-steps, creating a computational graph where the same parameters are shared at each step.</li>
+<li>Gradients are computed by propagating errors backward through time from <span class="arithmatex">\(t = T\)</span> to <span class="arithmatex">\(t = 0\)</span>, summing contributions from all steps.</li>
+<li>This process allows the model to adjust its parameters based on dependencies that span multiple time-steps.</li>
+</ul>
+<p>In practice, full BPTT over long sequences can be computationally expensive and unstable. Therefore, a variant called truncated BPTT is often used, where backpropagation is limited to a fixed number of time-steps (e.g., 20 or 50). This trades off full temporal context for efficiency and stability. Truncated BPTT implicitly limits the temporal horizon over which dependencies can be learned, acting as a practical approximation to full sequence optimization.</p>
+<p>BPTT is sensitive to gradient vanishing and exploding problems, especially with non-linear activations like tanh or sigmoid. Techniques such as gradient clipping and using gated architectures like LSTMs or GRUs are commonly employed to address these issues.</p>
+<h3 id="efficient-training-with-mini-batches">Efficient Training with Mini-Batches<a class="headerlink" href="#efficient-training-with-mini-batches" title="Permanent link">¶</a></h3>
+<p>Computing the loss and gradients over the entire corpus simultaneously is impractical due to memory limitations. Instead, training is performed on smaller units using mini-batches:</p>
+<ul>
+<li>The text corpus is divided into sequences such as sentences or fixed-length token chunks.</li>
+<li>A batch of these sequences is processed together to compute the average loss and gradients.</li>
+<li>Stochastic Gradient Descent (SGD) or its variants (e.g., Adam) are used to update parameters based on each batch.</li>
+</ul>
+<p>Handling variable-length sequences within batches requires padding and masking:</p>
+<ul>
+<li>Shorter sequences are padded with special tokens to match the longest sequence in the batch.</li>
+<li>Padding positions are masked to prevent them from contributing to the loss or gradient updates.</li>
+</ul>
+<p>This mini-batch training paradigm enables scalable computation and leverages hardware acceleration such as GPUs and TPUs.</p>
+<h3 id="training-vs-inference">Training vs. Inference<a class="headerlink" href="#training-vs-inference" title="Permanent link">¶</a></h3>
+<p>At inference time, teacher forcing is not available. Each predicted word is fed back into the model as input for the next step. This difference in input distribution between training and inference can degrade performance if the model is not robust to its own prediction errors. Techniques such as scheduled sampling or fine-tuning with generated sequences are sometimes used to mitigate this mismatch.</p>
+<h3 id="perplexity">Perplexity<a class="headerlink" href="#perplexity" title="Permanent link">¶</a></h3>
+<ul>
+<li>The standard evaluation metric for language models is perplexity.</li>
+</ul>
+<div class="arithmatex">\[
+\text{perplexity} =
+\left(
+\prod_{t=1}^{T}
+\frac{1}{P_{\text{LM}}(x^{(t+1)} \mid x^{(1)}, \ldots, x^{(t)})}
+\right)^{\frac{1}{T}}
+\]</div>
+<ul>
+<li>Inverse probability of corpus according to the language model, normalized by the number of words.</li>
+<li>This is equal to the exponential of the cross-entropy loss <span class="arithmatex">\(J(\theta)\)</span>:</li>
+</ul>
+<div class="arithmatex">\[
+\left(
+\prod_{t=1}^{T}
+\frac{1}{\hat{y}^{(t)}_{x_{t+1}}}
+\right)^{\frac{1}{T}}
+=
+\exp\left(
+\frac{1}{T}
+\sum_{t=1}^{T}
+-\log \hat{y}^{(t)}_{x_{t+1}}
+\right)
+=
+\exp(J(\theta))
+\]</div>
+<p>Perplexity can be viewed as the geometric mean of the inverse predicted probabilities assigned to the true next tokens.</p>
+<p>Perplexity can be interpreted as the effective average number of choices the model is considering at each time-step:</p>
+<ul>
+<li>A perplexity of 1 means the model predicts every word perfectly.</li>
+<li>A perplexity of 50 means the model is as uncertain as choosing uniformly from 50 possible words.</li>
+</ul>
+<p>Lower perplexity indicates better predictive performance and correlates with fluency and accuracy in language generation.</p>
+<p>Note: Perplexity is sensitive to vocabulary size and tokenization. Models should be compared under identical preprocessing conditions.</p>
+<h2 id="memory-scaling-in-recurrent-neural-networks">Memory Scaling in Recurrent Neural Networks<a class="headerlink" href="#memory-scaling-in-recurrent-neural-networks" title="Permanent link">¶</a></h2>
+<p>From a machine learning perspective, the memory requirements of RNNs can be divided into model parameters and runtime memory.</p>
+<h3 id="model-parameters-static-memory">Model Parameters (Static Memory)<a class="headerlink" href="#model-parameters-static-memory" title="Permanent link">¶</a></h3>
+<p>These are the weights and biases defining the RNN structure:</p>
+<ul>
+<li><span class="arithmatex">\(W_{hx} \in \mathbb{R}^{D_h \times d}\)</span></li>
+<li><span class="arithmatex">\(W_{hh} \in \mathbb{R}^{D_h \times D_h}\)</span></li>
+<li><span class="arithmatex">\(W_S \in \mathbb{R}^{|V| \times D_h}\)</span></li>
+<li>Bias vectors for each layer</li>
+</ul>
+<p>The memory required to store these parameters is constant with respect to corpus size. That is, increasing the number of sentences or tokens in the dataset does not change the size of these matrices.</p>
+<h3 id="runtime-memory-dynamic-per-sequence">Runtime Memory (Dynamic, per sequence)<a class="headerlink" href="#runtime-memory-dynamic-per-sequence" title="Permanent link">¶</a></h3>
+<p>During training with BPTT, the RNN stores:</p>
+<ul>
+<li>Input vectors <span class="arithmatex">\(x_t\)</span></li>
+<li>Hidden states <span class="arithmatex">\(h_t\)</span></li>
+<li>Intermediate gradient-related states</li>
+</ul>
+<p>Runtime memory scales linearly with sequence length <span class="arithmatex">\(T\)</span>. A sentence with <span class="arithmatex">\(T\)</span> words requires storage for <span class="arithmatex">\(T\)</span> hidden states and possibly <span class="arithmatex">\(T\)</span> sets of gradients.</p>
+<ul>
+<li>Model parameter count depends only on architecture parameters <span class="arithmatex">\(D_h\)</span>, <span class="arithmatex">\(d\)</span>, and <span class="arithmatex">\(|V|\)</span>.</li>
+<li>Training memory grows proportionally with input sequence length.</li>
+</ul>
+<p>Insight: RNNs are more memory-efficient than traditional <span class="arithmatex">\(n\)</span>-gram models in terms of model size, but training on long sequences increases memory usage due to the need to store intermediate activations over time.</p>
+<h2 id="advantages-and-disadvantages">Advantages and Disadvantages<a class="headerlink" href="#advantages-and-disadvantages" title="Permanent link">¶</a></h2>
+<p>Advantages:</p>
+<ol>
+<li>Can handle variable-length sequences  </li>
+<li>Parameter size independent of input length  </li>
+<li>Can model long-range dependencies  </li>
+<li>Weight sharing across time-steps  </li>
+</ol>
+<p>Disadvantages:</p>
+<ol>
+<li>Sequential computation limits parallelization  </li>
+<li>Prone to vanishing and exploding gradients  </li>
+<li>Difficulty in learning very long-term dependencies in practice</li>
+</ol>
+<h2 id="vanishing-and-exploding-gradients">Vanishing and Exploding Gradients<a class="headerlink" href="#vanishing-and-exploding-gradients" title="Permanent link">¶</a></h2>
+<p>The total gradient with respect to parameters is:</p>
+<div class="arithmatex">\[
+\frac{\partial E}{\partial W}
+=
+\sum_{t=1}^{T}
+\sum_{k=1}^{t}
+\frac{\partial E_t}{\partial y_t}
+\cdot
+\frac{\partial y_t}{\partial h_t}
+\cdot
+\left(
+\prod_{j=k+1}^{t}
+\frac{\partial h_j}{\partial h_{j-1}}
+\right)
+\cdot
+\frac{\partial h_k}{\partial W}
+\]</div>
+<p>Jacobian norm bound:</p>
+<div class="arithmatex">\[
+\left\|
+\frac{\partial h_t}{\partial h_k}
+\right\|
+\le
+(\beta_W \beta_h)^{t-k}
+\]</div>
+<p>Gradient clipping:</p>
+<div class="arithmatex">\[
+\text{if } \|g\| \ge \text{threshold},
+\quad
+g \leftarrow
+\frac{\text{threshold}}{\|g\|} \cdot g
+\]</div>
+<p>Solutions to vanishing gradients:</p>
+<ul>
+<li>Identity initialization for <span class="arithmatex">\(W_{hh}\)</span></li>
+<li>Use ReLU instead of sigmoid or tanh</li>
+</ul>
+<p>While RNNs provide a principled framework for sequence modeling and variable-length context, their training difficulties and limited parallelism motivated the development of gated recurrent architectures and attention-based models, which we study next.</p>
 
 
 
@@ -1065,15 +1235,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../3_nn/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Window-based Neural Language Models">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Window-based Neural Language Models
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../5_lstm/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Long Short-Term Memory (LSTM) Networks">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                5. Long Short-Term Memory (LSTM) Networks
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1310,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

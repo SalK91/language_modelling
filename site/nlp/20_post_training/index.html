@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/20_post_training/">
       
       
+        <link rel="prev" href="../19_eval_nlg/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../21_advanced_topics/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>20. Post-training - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#post-trainings-prompting-instruction-finetuning-and-dporlhf" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              20. Post-training
             
           </span>
         </div>
@@ -234,11 +236,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +255,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +343,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +357,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +365,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +418,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +446,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -626,7 +621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -741,7 +736,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -899,10 +894,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -913,6 +917,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -925,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1009,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/20_post_training.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1018,171 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/20_post_training.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="post-trainings-prompting-instruction-finetuning-and-dporlhf">Post-trainings: Prompting, Instruction Finetuning, and DPO/RLHF<a class="headerlink" href="#post-trainings-prompting-instruction-finetuning-and-dporlhf" title="Permanent link">¶</a></h1>
+<h2 id="zero-shot-and-few-shot-in-context-learning">Zero-Shot and Few-Shot In-Context Learning<a class="headerlink" href="#zero-shot-and-few-shot-in-context-learning" title="Permanent link">¶</a></h2>
+<h3 id="zero-shot-in-context-learning">Zero-Shot In-Context Learning<a class="headerlink" href="#zero-shot-in-context-learning" title="Permanent link">¶</a></h3>
+<p>Large language models (LLMs), beginning with GPT-2 and especially prominent in GPT-3 and beyond, exhibit a remarkable emergent ability: zero-shot learning. In this setting, a model can perform a task without any task-specific gradient updates or labeled examples—just by conditioning on the right input format.</p>
+<h4 id="example-qa-as-language-modeling">Example (QA as Language Modeling):<a class="headerlink" href="#example-qa-as-language-modeling" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>Passage: Tom Brady is an American football player born in San Mateo, California.<br>
+Q: Where was Tom Brady born? A:</p>
+</blockquote>
+<p>The model simply continues the sequence by generating the most probable completion (“San Mateo, California”).</p>
+<h4 id="example-winograd-schema">Example (Winograd Schema):<a class="headerlink" href="#example-winograd-schema" title="Permanent link">¶</a></h4>
+<p>The model can also answer commonsense questions by comparing the likelihood of different completions:</p>
+<blockquote>
+<p>The cat couldn't fit into the hat because it was too big.</p>
+</blockquote>
+<p>Here, the model disambiguates the pronoun “it” by comparing:
+<script type="math/tex; mode=display">
+P(\text{...because the cat was too big}) \quad \text{vs.} \quad P(\text{...because the hat was too big})
+</script>
+A higher probability assigned to the second option indicates the model's preference for “hat” as the correct referent, aligning with human intuition.</p>
+<h3 id="few-shot-in-context-learning">Few-Shot (In-Context) Learning<a class="headerlink" href="#few-shot-in-context-learning" title="Permanent link">¶</a></h3>
+<p>In few-shot in-context learning, the model is given a small number of input-output examples as context, followed by a new input to predict. No parameter updates occur—learning happens purely via conditioning on the prompt.</p>
+<h4 id="example-sentiment-classification">Example (Sentiment Classification):<a class="headerlink" href="#example-sentiment-classification" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>Review: This movie was amazing. Sentiment: Positive<br>
+Review: The plot was dull and slow. Sentiment: Negative<br>
+Review: The acting was brilliant. Sentiment:</p>
+</blockquote>
+<p>The model is expected to complete the pattern with <code>Positive</code>.</p>
+<h4 id="terminology-note">Terminology Note:<a class="headerlink" href="#terminology-note" title="Permanent link">¶</a></h4>
+<p>This is often referred to as in-context learning (ICL) to distinguish it from traditional few-shot learning involving optimization-based methods.</p>
+<h4 id="limitations-of-prompting">Limitations of Prompting<a class="headerlink" href="#limitations-of-prompting" title="Permanent link">¶</a></h4>
+<p>Despite the versatility of prompting, in-context learning has limitations:</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>Context window size: Prompt length is bounded by the model's maximum context window, limiting how many examples or instructions can be included.</li>
+<li>Reasoning complexity: Some tasks, especially those involving multi-hop or logical reasoning, remain difficult even for very large models using sophisticated prompts.</li>
+<li>Interpretability and control: Prompting alone provides limited control over internal reasoning steps or modular behavior.</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<h4 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h4>
+<ul>
+<li>In-context learning enables task generalization without gradient updates.</li>
+<li>Prompt design (e.g., Chain-of-Thought, few-shot examples) significantly influences performance.</li>
+<li>However, for complex reasoning tasks, prompting may not be sufficient—gradient-based finetuning or hybrid techniques (e.g., tool use, scratchpads) may be necessary.</li>
+</ul>
+<h3 id="instruction-finetuning">Instruction Finetuning<a class="headerlink" href="#instruction-finetuning" title="Permanent link">¶</a></h3>
+<p>Instruction finetuning is a paradigm in which a pretrained language model is adapted using a diverse set of (instruction, output) pairs across a wide range of natural language tasks. The goal is to teach the model to follow explicit instructions phrased in natural language, enabling it to generalize to unseen tasks at inference time without further finetuning.</p>
+<h4 id="core-methodology">Core Methodology<a class="headerlink" href="#core-methodology" title="Permanent link">¶</a></h4>
+<p>The core idea is to treat language modeling as a multitask learning problem, where each task is presented as a textual instruction, and the model is finetuned to produce the appropriate output. This process involves:</p>
+<ul>
+<li>Collecting a large, heterogeneous corpus of <span class="arithmatex">\((\text{instruction}, \text{response})\)</span> pairs spanning tasks such as question answering, summarization, classification, translation, commonsense reasoning, etc.</li>
+<li>Optionally applying task mixtures (e.g., T0) or task reformulations to promote robustness.</li>
+<li>Finetuning the model using a standard language modeling objective on these paired samples.</li>
+</ul>
+<h4 id="benefits">Benefits<a class="headerlink" href="#benefits" title="Permanent link">¶</a></h4>
+<ul>
+<li>Simplicity: A unified finetuning pipeline can teach the model to perform a wide range of tasks, framed uniformly as instruction following.</li>
+<li>Generalization: Models trained this way can often generalize to novel tasks simply by being given a well-phrased prompt—even tasks not seen during training (zero-shot generalization).</li>
+<li>Improved usability: End-users do not need to know the model’s internal API or finetune further; they can interact with the model via natural language instructions.</li>
+</ul>
+<h4 id="challenges-and-limitations">Challenges and Limitations<a class="headerlink" href="#challenges-and-limitations" title="Permanent link">¶</a></h4>
+<ul>
+<li>Data cost: Collecting high-quality demonstrations for hundreds of diverse tasks is resource-intensive and often requires human annotation.</li>
+<li>Alignment mismatch: The model is optimized for a maximum likelihood objective, which may not align with human preferences (e.g., helpfulness, harmlessness, or truthfulness), leading to outputs that are technically correct but pragmatically unhelpful.</li>
+<li>Ambiguity in instructions: Natural language instructions can be underspecified or ambiguous, requiring either better dataset design or model mechanisms for disambiguation.</li>
+</ul>
+<h4 id="representative-models">Representative Models<a class="headerlink" href="#representative-models" title="Permanent link">¶</a></h4>
+<p>Instruction finetuning has been a foundational technique behind several recent LLMs:</p>
+<ul>
+<li>T5 (Text-to-Text Transfer Transformer): Casts all tasks into a text-to-text format with task-specific prefixes (e.g., “translate English to German: ...”).</li>
+<li>FLAN (Finetuned Language Net): Builds on T5 with instruction finetuning across many tasks and task variants.</li>
+<li>T0: Trains on prompt collections to enable strong zero-shot task generalization.</li>
+<li>InstructGPT: Combines instruction finetuning with reinforcement learning from human feedback (RLHF) to better align with human intent.</li>
+</ul>
+<h4 id="outlook">Outlook<a class="headerlink" href="#outlook" title="Permanent link">¶</a></h4>
+<p>Instruction finetuning plays a key role in aligning language models with human goals and making them more broadly useful without requiring users to craft task-specific prompts. However, as models scale and tasks become more complex, instruction finetuning alone may be insufficient, motivating hybrid approaches that integrate tool use, memory, and interaction (e.g., agents or retrievers).</p>
+<h3 id="optimizing-for-human-preferences-rlhf-dpo">Optimizing for Human Preferences (RLHF / DPO)<a class="headerlink" href="#optimizing-for-human-preferences-rlhf-dpo" title="Permanent link">¶</a></h3>
+<p>While instruction finetuning significantly improves a language model's usability by teaching it to follow task instructions, it does not guarantee alignment with human values, preferences, or expectations. To bridge this gap, researchers have developed techniques that explicitly optimize language models based on human preferences. Two leading approaches in this domain are Reinforcement Learning from Human Feedback (RLHF) and Direct Preference Optimization (DPO).</p>
+<h4 id="from-instructions-to-rewards">From Instructions to Rewards<a class="headerlink" href="#from-instructions-to-rewards" title="Permanent link">¶</a></h4>
+<p>Instruction tuning is typically the first step in building an aligned model. However, aligning model outputs more precisely with human expectations requires further optimization:</p>
+<ul>
+<li>Step 1: Instruction finetuning on diverse (instruction, output) pairs.</li>
+<li>Step 2: Learning a reward function from human feedback.</li>
+<li>Step 3: Optimizing the model to produce outputs that maximize this learned reward.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/RLHF.png" data-desc-position="bottom"><img alt="RLHF" src="../images/RLHF.png"></a></p>
+<h4 id="learning-human-preferences">Learning Human Preferences<a class="headerlink" href="#learning-human-preferences" title="Permanent link">¶</a></h4>
+<p>Key challenge: Obtaining human feedback at scale is expensive, inconsistent, and noisy.</p>
+<p>Solution: Instead of relying on absolute scores or direct ratings—which are often uncalibrated—use pairwise comparisons, where humans are asked to choose the preferred output among two or more options. These comparisons can then be modeled as a binary classification task.</p>
+<p>A commonly used model for interpreting such data is the Bradley–Terry model, which assigns a higher latent score to the preferred (“winning”) output over the non-preferred (“losing”) one.</p>
+<h4 id="reinforcement-learning-from-human-feedback-rlhf">Reinforcement Learning from Human Feedback (RLHF)<a class="headerlink" href="#reinforcement-learning-from-human-feedback-rlhf" title="Permanent link">¶</a></h4>
+<p>RLHF is a three-step pipeline:</p>
+<ol>
+<li>Supervised Instruction Tuning: Finetune the language model on instruction datasets to teach basic task-following behavior.</li>
+<li>Reward Modeling: Collect human preference data in the form of comparisons between model outputs. Train a reward model (RM) to predict human preferences by learning to assign higher scores to preferred responses.</li>
+<li>Policy Optimization: Use reinforcement learning (typically Proximal Policy Optimization, PPO) to optimize the language model to produce outputs that maximize the predicted reward, while remaining close to the supervised model (e.g., via a KL-divergence penalty).</li>
+</ol>
+<p>Strengths:</p>
+<ul>
+<li>Produces high-quality, aligned outputs when tuned well.</li>
+<li>Flexible reward modeling enables fine-grained preference learning.</li>
+</ul>
+<p>Challenges:</p>
+<ul>
+<li>RL optimization is unstable, sensitive to reward shaping and hyperparameters.</li>
+<li>Computationally expensive: PPO with large models requires extensive resources.</li>
+<li>Human preferences are not always consistent, and reward models may overfit artifacts in the training data.</li>
+</ul>
+<h4 id="direct-preference-optimization-dpo">Direct Preference Optimization (DPO)<a class="headerlink" href="#direct-preference-optimization-dpo" title="Permanent link">¶</a></h4>
+<p>DPO offers a simpler, stable alternative to RLHF by bypassing the need for reinforcement learning altogether. Instead, it directly finetunes the language model on human preference data using a contrastive objective.</p>
+<p>Given a dataset of preferred (“chosen”) and non-preferred (“rejected”) outputs, the model is trained to increase the likelihood of preferred completions relative to rejected ones.</p>
+<p>Advantages:</p>
+<ul>
+<li>No reinforcement learning loop — avoids instability and simplifies training.</li>
+<li>Leverages the pretrained model’s probabilities directly.</li>
+<li>Comparable performance to RLHF on many benchmarks.</li>
+</ul>
+<p>Limitations:</p>
+<ul>
+<li>Assumes high-quality, diverse comparison data.</li>
+<li>Does not inherently model long-term or interactive objectives.</li>
+</ul>
+<h4 id="summary_1">Summary<a class="headerlink" href="#summary_1" title="Permanent link">¶</a></h4>
+<ul>
+<li>Optimizing for human preferences is essential for building safe, aligned LLMs.</li>
+<li>RLHF has shown strong results (e.g., InstructGPT, ChatGPT), but is computationally intensive.</li>
+<li>DPO is emerging as a lightweight, scalable alternative with competitive results.</li>
+<li>Both methods rely on accurate human preference modeling—an inherently noisy and subjective signal.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Instruction Fine-Tuning (IFT)</td>
+<td>Training a language model to follow user instructions, typically using an autoregressive language modeling loss.</td>
+</tr>
+<tr>
+<td>Supervised Fine-Tuning (SFT)</td>
+<td>Training a model on task-specific labeled data to acquire desired capabilities, generally with an autoregressive LM loss.</td>
+</tr>
+<tr>
+<td>Alignment</td>
+<td>A broad goal of making models behave according to user intentions or societal values; can be optimized via any suitable loss function.</td>
+</tr>
+<tr>
+<td>Reinforcement Learning from Human Feedback (RLHF)</td>
+<td>A specific technique that fine-tunes models using human-generated preference data via reinforcement learning.</td>
+</tr>
+<tr>
+<td>Preference Fine-Tuning</td>
+<td>Uses human-labeled preference data to fine-tune models. Can be implemented via RLHF, Direct Preference Optimization (DPO), or learning-to-rank methods.</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1065,15 +1217,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../19_eval_nlg/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 19. Evaluation of NLG Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                19. Evaluation of NLG Systems
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../21_advanced_topics/" class="md-footer__link md-footer__link--next" aria-label="Next: 21. Advanced Topics in Language Modelling">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                21. Advanced Topics in Language Modelling
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1292,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

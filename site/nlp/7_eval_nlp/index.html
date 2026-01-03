@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/7_eval_nlp/">
       
       
+        <link rel="prev" href="../6_app_rnn/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../8_attention_seq2seq/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>7. Evaluation of Language Models - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#chapter-7-evaluation-metrics-in-nlp" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              7. Evaluation of Language Models
             
           </span>
         </div>
@@ -234,11 +236,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +255,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +343,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +357,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +365,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +418,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +446,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -600,10 +595,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -614,6 +618,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -626,7 +631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+      <a href="../8_attention_seq2seq/" class="md-nav__link">
         
   
   
@@ -649,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -741,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -925,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1009,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/7_eval_nlp.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1018,180 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/7_eval_nlp.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="chapter-7-evaluation-metrics-in-nlp">Chapter 7: Evaluation Metrics in NLP<a class="headerlink" href="#chapter-7-evaluation-metrics-in-nlp" title="Permanent link">¶</a></h1>
+<p>Evaluating NLP models is essential to ensure their performance, generalizability, and utility. The appropriate metric depends on the specific task, data characteristics, and desired outcome. Below, we detail evaluation methods used for key NLP tasks and provide a comparative table of metrics.</p>
+<p>Evaluation metrics quantify different aspects of model behavior, such as accuracy, fluency, semantic adequacy, and robustness, and no single metric is sufficient for all tasks.</p>
+<h2 id="machine-translation-evaluation">Machine Translation Evaluation<a class="headerlink" href="#machine-translation-evaluation" title="Permanent link">¶</a></h2>
+<p>Machine translation is a structured generation task where outputs are compared against one or more human reference translations.</p>
+<h3 id="1-bleu-bilingual-evaluation-understudy">1. BLEU (Bilingual Evaluation Understudy)<a class="headerlink" href="#1-bleu-bilingual-evaluation-understudy" title="Permanent link">¶</a></h3>
+<p>BLEU is a precision-based metric used to evaluate the quality of machine-translated text by comparing it to one or more human reference translations. It uses modified n-gram precision and a brevity penalty to penalize overly short translations.</p>
+<div class="arithmatex">\[
+\text{BLEU} = \text{BP} \cdot \exp\left( \sum_{n=1}^{N} w_n \log p_n \right)
+\]</div>
+<p>where:</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li><span class="arithmatex">\(p_n\)</span> is the modified (clipped) precision for n-grams of size <span class="arithmatex">\(n\)</span></li>
+<li><span class="arithmatex">\(w_n\)</span> is the weight for each n-gram order (typically <span class="arithmatex">\(w_n = \frac{1}{N}\)</span>)</li>
+<li><span class="arithmatex">\(\text{BP}\)</span> is the brevity penalt
+y to penalize translations that are too short
+BLEU primarily measures surface-level n-gram overlap and does not directly capture semantic adequacy or fluency.</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<p>The clipped precision <span class="arithmatex">\(p_n\)</span> is defined as:</p>
+<div class="arithmatex">\[
+p_n =
+\frac{
+\sum_{\text{ngram} \in C}
+\min\left(
+\text{Count}_{\text{clip}}(\text{ngram}),
+\text{MaxRefCount}(\text{ngram})
+\right)
+}{
+\sum_{\text{ngram} \in C}
+\text{Count}(\text{ngram})
+}
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(C\)</span> is the set of n-grams of order <span class="arithmatex">\(n\)</span> in the candidate translation</li>
+<li><span class="arithmatex">\(\text{Count}(\text{ngram})\)</span> is the number of times an n-gram appears in the candidate</li>
+<li><span class="arithmatex">\(\text{MaxRefCount}(\text{ngram})\)</span> is the maximum number of times the n-gram appears in any reference translation</li>
+<li><span class="arithmatex">\(\text{Count}_{\text{clip}}(\text{ngram})\)</span> is clipped to avoid overcounting spurious matches</li>
+</ul>
+<p>Clipping prevents a system from gaining excessive credit by repeating n-grams that appear only a limited number of times in the references.</p>
+<p>The brevity penalty (BP) is given by:</p>
+<div class="arithmatex">\[
+\text{BP} =
+\begin{cases}
+1 &amp; \text{if } c &gt; r \\
+\exp\left(1 - \frac{r}{c}\right) &amp; \text{if } c \le r
+\end{cases}
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(c\)</span> is the length of the candidate translation</li>
+<li><span class="arithmatex">\(r\)</span> is the effective reference length (usually the closest reference length to <span class="arithmatex">\(c\)</span>)</li>
+</ul>
+<p>Without the brevity penalty, a system could achieve high precision by generating unnaturally short translations.</p>
+<p>Use: BLEU is widely used for evaluating machine translation systems and is more reliable at the corpus level than at the sentence level.</p>
+<h3 id="2-rouge-recall-oriented-understudy-for-gisting-evaluation">2. ROUGE (Recall-Oriented Understudy for Gisting Evaluation)<a class="headerlink" href="#2-rouge-recall-oriented-understudy-for-gisting-evaluation" title="Permanent link">¶</a></h3>
+<p>Unlike BLEU, which emphasizes precision, ROUGE is recall-oriented and focuses on how much of the reference content is covered by the generated text.</p>
+<p>Originally designed for summarization, ROUGE can also be used for machine translation and other generation tasks. It primarily measures recall of overlapping units such as n-grams and longest common subsequences.</p>
+<ul>
+<li>ROUGE-N: Overlap of n-grams (e.g., ROUGE-1, ROUGE-2)</li>
+<li>ROUGE-L: Longest Common Subsequence (LCS)-based recall</li>
+<li>ROUGE-S: Skip bigram-based F-measure</li>
+</ul>
+<div class="arithmatex">\[
+\text{ROUGE-N Recall} =
+\frac{
+\sum_{\text{reference}}
+\text{match}_{n\text{-grams}}
+}{
+\sum_{\text{reference}}
+\text{total}_{n\text{-grams}}
+}
+\]</div>
+<p>Use: Especially useful in summarization tasks and adaptable to translation.</p>
+<h3 id="other-metrics-for-mt-and-generation">Other Metrics for MT and Generation<a class="headerlink" href="#other-metrics-for-mt-and-generation" title="Permanent link">¶</a></h3>
+<p>Recent evaluation metrics aim to move beyond surface overlap by incorporating linguistic knowledge or learned semantic representations.</p>
+<ul>
+<li>METEOR: Considers synonym matching, stemming, and alignment; combines precision and recall using an F-score</li>
+<li>chrF: Character n-gram F-score; language-agnostic and effective for morphologically rich languages</li>
+<li>BERTScore: Uses contextual embeddings from BERT to compute similarity between candidate and reference</li>
+<li>COMET / BLEURT: Learned metrics trained on human judgment data; state-of-the-art for semantic machine translation evaluation</li>
+</ul>
+<p>While these metrics correlate better with human judgments, they depend on pretrained models and training data biases.</p>
+<h2 id="comprehensive-evaluation-table-for-nlp-tasks">Comprehensive Evaluation Table for NLP Tasks<a class="headerlink" href="#comprehensive-evaluation-table-for-nlp-tasks" title="Permanent link">¶</a></h2>
+<p>Table below summarizes commonly used metrics across major NLP tasks, highlighting typical evaluation practices rather than exhaustive standards.</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Common Metrics</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Part-of-Speech Tagging</td>
+<td>Accuracy</td>
+<td>Fraction of correctly predicted tags per token</td>
+</tr>
+<tr>
+<td>Named Entity Recognition</td>
+<td>Precision, Recall, F1-score (token/span-level)</td>
+<td>Evaluates boundary and entity type correctness using strict span or loose token overlap</td>
+</tr>
+<tr>
+<td>Sentiment Analysis</td>
+<td>Accuracy, F1-score, MCC</td>
+<td>Binary or multi-class classification; class imbalance is often a concern</td>
+</tr>
+<tr>
+<td>Text Classification</td>
+<td>Accuracy, Precision, Recall, F1-score</td>
+<td>General-purpose classification; often multi-label or hierarchical</td>
+</tr>
+<tr>
+<td>Machine Translation</td>
+<td>BLEU, ROUGE, METEOR, chrF, COMET, BERTScore</td>
+<td>BLEU is standard; newer metrics better reflect semantic adequacy</td>
+</tr>
+<tr>
+<td>Summarization</td>
+<td>ROUGE-1/2/L, BERTScore, BLEURT</td>
+<td>ROUGE-L captures sequence overlap; embedding-based metrics assess meaning</td>
+</tr>
+<tr>
+<td>Question Answering</td>
+<td>EM, F1-score</td>
+<td>Used for span-based QA; F1 accounts for partial overlap</td>
+</tr>
+<tr>
+<td>Text Generation</td>
+<td>BLEU, ROUGE, BERTScore, MAUVE, Human evaluation</td>
+<td>Open-ended generation requires fluency and diversity metrics</td>
+</tr>
+<tr>
+<td>Dialogue Systems</td>
+<td>USR, BLEU, METEOR, BERTScore, Human evaluation</td>
+<td>Measures relevance, coherence, and engagement</td>
+</tr>
+<tr>
+<td>Text Simplification</td>
+<td>SARI, FKGL, BLEU</td>
+<td>SARI evaluates beneficial edits; BLEU may not correlate with simplicity</td>
+</tr>
+<tr>
+<td>Coreference Resolution</td>
+<td>MUC, B<span class="arithmatex">\(^3\)</span>, CEAF</td>
+<td>Measures clustering of entity mentions; metrics are often used together</td>
+</tr>
+<tr>
+<td>Language Modeling</td>
+<td>Perplexity, Cross-Entropy</td>
+<td>Evaluates next-token prediction; lower is better</td>
+</tr>
+<tr>
+<td>Paraphrase Detection / Text Similarity</td>
+<td>Accuracy, Cosine similarity, Pearson/Spearman correlation</td>
+<td>Used in semantic textual similarity and entailment tasks</td>
+</tr>
+<tr>
+<td>Information Retrieval / Ranking</td>
+<td>MRR, MAP, Recall@k, nDCG</td>
+<td>Measures ranking quality for documents or passages</td>
+</tr>
+</tbody>
+</table>
+<p>In practice, reliable evaluation often combines automatic metrics with human judgment, especially for open-ended generation tasks. Metric selection should be guided by task objectives, data characteristics, and known limitations of each evaluation method.</p>
 
 
 
@@ -1065,15 +1226,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../6_app_rnn/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Applications of RNN">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Applications of RNN
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../8_attention_seq2seq/" class="md-footer__link md-footer__link--next" aria-label="Next: 8. Attention Mechanism in Sequence-to-Sequence Models">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                8. Attention Mechanism in Sequence-to-Sequence Models
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1301,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       

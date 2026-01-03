@@ -9,26 +9,28 @@
         <meta name="author" content="Salman Khan">
       
       
-        <link rel="canonical" href="https://salk91.github.io/language_modelling/">
+        <link rel="canonical" href="https://salk91.github.io/language_modelling/nlp/8_attention_seq2seq/">
       
       
+        <link rel="prev" href="../7_eval_nlp/">
       
-        <link rel="next" href="nlp/1_intro/">
+      
+        <link rel="next" href="../9_selfattention/">
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>NLP Lecture Notes</title>
+        <title>8. Attention Mechanism in Sequence-to-Sequence Models - NLP Lecture Notes</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +49,20 @@
       
     
     
-      <link rel="stylesheet" href="css/print-site.css">
+      <link rel="stylesheet" href="../../css/print-site.css">
     
-      <link rel="stylesheet" href="css/print-site-material.css">
+      <link rel="stylesheet" href="../../css/print-site-material.css">
     
-      <link rel="stylesheet" href="styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -89,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lectures-on-language-modelling" class="md-skip">
+        <a href="#8-attention-mechanism-in-sequence-to-sequence-models" class="md-skip">
           Skip to content
         </a>
       
@@ -103,7 +105,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-header__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -123,7 +125,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              8. Attention Mechanism in Sequence-to-Sequence Models
             
           </span>
         </div>
@@ -234,11 +236,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="." class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
         
   
   
@@ -255,11 +255,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="nlp/1_intro/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../1_intro/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="print_page/" class="md-tabs__link">
+      <a href="../../print_page/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
+    <a href="../.." title="NLP Lecture Notes" class="md-nav__button md-logo" aria-label="NLP Lecture Notes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
@@ -341,19 +343,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -364,7 +357,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -373,8 +365,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -424,21 +418,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -451,7 +446,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Natural Language Processing
@@ -465,7 +460,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/1_intro/" class="md-nav__link">
+      <a href="../1_intro/" class="md-nav__link">
         
   
   
@@ -488,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/2_lmnp/" class="md-nav__link">
+      <a href="../2_lmnp/" class="md-nav__link">
         
   
   
@@ -511,7 +506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/3_nn/" class="md-nav__link">
+      <a href="../3_nn/" class="md-nav__link">
         
   
   
@@ -534,7 +529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/4_rnn/" class="md-nav__link">
+      <a href="../4_rnn/" class="md-nav__link">
         
   
   
@@ -557,7 +552,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/5_lstm/" class="md-nav__link">
+      <a href="../5_lstm/" class="md-nav__link">
         
   
   
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/6_app_rnn/" class="md-nav__link">
+      <a href="../6_app_rnn/" class="md-nav__link">
         
   
   
@@ -603,7 +598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/7_eval_nlp/" class="md-nav__link">
+      <a href="../7_eval_nlp/" class="md-nav__link">
         
   
   
@@ -623,10 +618,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="nlp/8_attention_seq2seq/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -637,6 +641,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -649,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/9_selfattention/" class="md-nav__link">
+      <a href="../9_selfattention/" class="md-nav__link">
         
   
   
@@ -672,7 +677,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/10_archi/" class="md-nav__link">
+      <a href="../10_archi/" class="md-nav__link">
         
   
   
@@ -695,7 +700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/11_tokens/" class="md-nav__link">
+      <a href="../11_tokens/" class="md-nav__link">
         
   
   
@@ -718,7 +723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/12_pretraining/" class="md-nav__link">
+      <a href="../12_pretraining/" class="md-nav__link">
         
   
   
@@ -741,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/13_pretrain_strat/" class="md-nav__link">
+      <a href="../13_pretrain_strat/" class="md-nav__link">
         
   
   
@@ -764,7 +769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/14_finetuning/" class="md-nav__link">
+      <a href="../14_finetuning/" class="md-nav__link">
         
   
   
@@ -787,7 +792,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/15_cot/" class="md-nav__link">
+      <a href="../15_cot/" class="md-nav__link">
         
   
   
@@ -810,7 +815,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/16_nlg/" class="md-nav__link">
+      <a href="../16_nlg/" class="md-nav__link">
         
   
   
@@ -833,7 +838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/17_imp_nlg/" class="md-nav__link">
+      <a href="../17_imp_nlg/" class="md-nav__link">
         
   
   
@@ -856,7 +861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/18_eval_nlu/" class="md-nav__link">
+      <a href="../18_eval_nlu/" class="md-nav__link">
         
   
   
@@ -879,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/19_eval_nlg/" class="md-nav__link">
+      <a href="../19_eval_nlg/" class="md-nav__link">
         
   
   
@@ -902,7 +907,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/20_post_training/" class="md-nav__link">
+      <a href="../20_post_training/" class="md-nav__link">
         
   
   
@@ -925,7 +930,7 @@
   
   
     <li class="md-nav__item">
-      <a href="nlp/21_advanced_topics/" class="md-nav__link">
+      <a href="../21_advanced_topics/" class="md-nav__link">
         
   
   
@@ -955,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="print_page/" class="md-nav__link">
+      <a href="../../print_page/" class="md-nav__link">
         
   
   
@@ -1004,7 +1009,7 @@
 
 
   
-    <a href="https://github.com/SalK91/edit/main/docs/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SalK91/edit/main/docs/nlp/8_attention_seq2seq.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -1013,24 +1018,88 @@
     
       
     
-    <a href="https://github.com/SalK91/raw/main/docs/index.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/SalK91/raw/main/docs/nlp/8_attention_seq2seq.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"></path></svg>
     </a>
   
 
 
-<h1 id="lectures-on-language-modelling">Lectures on Language Modelling<a class="headerlink" href="#lectures-on-language-modelling" title="Permanent link">¶</a></h1>
-<p>Welcome to <em>Lectures on RLanguage Modelling</em>, a structured set of lecture notes designed to build the mathematical foundations required to understand, analyze, and develop modern language models.</p>
-<p>These notes are inspired by and draw heavily on material from:</p>
+<h1 id="8-attention-mechanism-in-sequence-to-sequence-models">8. Attention Mechanism in Sequence-to-Sequence Models<a class="headerlink" href="#8-attention-mechanism-in-sequence-to-sequence-models" title="Permanent link">¶</a></h1>
+<p>Traditional sequence-to-sequence (seq2seq) models suffer from a bottleneck where the entire source sentence is compressed into a single fixed-size vector (i.e., the final encoder hidden state). This poses challenges, particularly for long or information-rich inputs, as important details may be lost. This fixed-length bottleneck becomes increasingly problematic as input sequences grow longer or contain multiple salient elements.</p>
+<p>The attention mechanism alleviates this issue by allowing the decoder to dynamically attend to different parts of the input sequence at each time step. Rather than depending solely on a single context vector, the decoder computes a weighted combination of all encoder hidden states, tailored for each output step. Intuitively, attention allows the decoder to query the encoder for the most relevant information at each decoding step.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../images/attention_seq_t_seq.png" data-desc-position="bottom"><img alt="Attention - Seq-to-seq" src="../images/attention_seq_t_seq.png"></a></p>
+<h3 id="mathematical-formulation">Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Permanent link">¶</a></h3>
+<p>Assume the encoder outputs a sequence of hidden states. The encoder hidden states represent the source sequence, while the decoder hidden state represents the current generation context.</p>
+<div class="arithmatex">\[
+h_1, h_2, \dots, h_N \in \mathbb{R}^h
+\]</div>
+<p>and the decoder has a hidden state at time step <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
+s_t \in \mathbb{R}^h
+\]</div>
+<p>The attention mechanism proceeds as follows:</p>
+<ol>
+<li>
+<p>Score computation: Compute unnormalized attention scores between the decoder hidden state and each encoder hidden state:</p>
+<div class="arithmatex">\[
+e^t = [s_t^\top h_1, \dots, s_t^\top h_N] \in \mathbb{R}^N
+\]</div>
+<p>Each score measures the compatibility between the current decoder state and a specific encoder state.</p>
+</li>
+<li>
+<p>Attention weights: Apply the softmax function to normalize these scores and obtain a probability distribution over the input positions:</p>
+<div class="arithmatex">\[
+\alpha^t = \text{softmax}(e^t) \in \mathbb{R}^N
+\]</div>
+<p>The resulting weights form a probability distribution over input positions.</p>
+</li>
+<li>
+<p>Context vector: Compute the attention output <span class="arithmatex">\(a_t\)</span> as the weighted sum of the encoder hidden states:</p>
+<div class="arithmatex">\[
+a_t = \sum_{i=1}^N \alpha_i^t h_i \in \mathbb{R}^h
+\]</div>
+<p>This context vector changes at every decoding step, enabling dynamic focus over the input sequence.</p>
+</li>
+<li>
+<p>Final decoder input: Concatenate the attention vector <span class="arithmatex">\(a_t\)</span> with the decoder hidden state <span class="arithmatex">\(s_t\)</span> to form a rich context vector for output generation:</p>
+<div class="arithmatex">\[
+[a_t; s_t] \in \mathbb{R}^{2h}
+\]</div>
+</li>
+</ol>
+<p>This combined vector is typically passed through a feedforward layer or used directly for predicting the output token.</p>
+<h2 id="interpretability-and-alignment">Interpretability and Alignment<a class="headerlink" href="#interpretability-and-alignment" title="Permanent link">¶</a></h2>
+<p>One of the key advantages of attention is that it provides a degree of interpretability to the model. Specifically:</p>
 <ul>
-<li>Stanford CS224N: NLP with Deep Learning (Spring 2024)</li>
-<li>Stanford CME295: Transformers &amp; LLMs (Autumn 2025) </li>
+<li>Alignment visualization: The attention weights <span class="arithmatex">\(\alpha^t\)</span> at each decoder step can be visualized to see which parts of the input the model is focusing on.</li>
+<li>Soft alignment: Attention naturally yields a soft alignment between source and target tokens without explicit supervision. The network learns this alignment purely from end-to-end training.</li>
+<li>Insight into model behavior: These alignments allow us to debug, explain, and understand the model's translation or generation decisions.</li>
 </ul>
-<p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
-<h2 id="resume-from">Resume from:<a class="headerlink" href="#resume-from" title="Permanent link">¶</a></h2>
-<p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p>
+<p>This emergent alignment capability is one of the reasons attention mechanisms are considered both powerful and elegant.</p>
+<h2 id="variants-of-attention-mechanisms">Variants of Attention Mechanisms<a class="headerlink" href="#variants-of-attention-mechanisms" title="Permanent link">¶</a></h2>
+<p>While the basic attention mechanism uses a simple dot product between decoder and encoder hidden states, there are several alternative formulations that aim to improve the flexibility or expressiveness of the attention scoring function. Let <span class="arithmatex">\(h_i \in \mathbb{R}^{d_1}\)</span> denote the encoder hidden state at position <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(s \in \mathbb{R}^{d_2}\)</span> be the current decoder hidden state.</p>
+<h3 id="1-dot-product-attention-luong-et-al">1. Dot-Product Attention (Luong et al.)<a class="headerlink" href="#1-dot-product-attention-luong-et-al" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+e_i = s^\top h_i \in \mathbb{R}
+\]</div>
+<p>This is the simplest form of attention, assuming that <span class="arithmatex">\(d_1 = d_2\)</span>. This method is efficient and often works well in practice, but lacks trainable parameters in the scoring function. Its simplicity makes it computationally efficient and well suited for large-scale models.</p>
+<h3 id="2-multiplicative-bilinear-attention">2. Multiplicative (Bilinear) Attention<a class="headerlink" href="#2-multiplicative-bilinear-attention" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+e_i = s^\top W h_i \in \mathbb{R}
+\]</div>
+<p>where <span class="arithmatex">\(W \in \mathbb{R}^{d_2 \times d_1}\)</span> is a learned weight matrix. This adds more expressiveness to the attention mechanism, enabling a trainable compatibility function between <span class="arithmatex">\(s\)</span> and <span class="arithmatex">\(h_i\)</span>. </p>
+<h3 id="3-reduced-rank-multiplicative-attention">3. Reduced-Rank Multiplicative Attention<a class="headerlink" href="#3-reduced-rank-multiplicative-attention" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+e_i = s^\top (U^\top V) h_i = (Us)^\top (Vh_i)
+\]</div>
+<p>with <span class="arithmatex">\(U \in \mathbb{R}^{k \times d_2}\)</span> and <span class="arithmatex">\(V \in \mathbb{R}^{k \times d_1}\)</span>, where <span class="arithmatex">\(k \ll d_1, d_2\)</span>. This low-rank factorization reduces the number of parameters and computations and is conceptually related to self-attention in Transformers. This formulation trades expressiveness for efficiency by constraining the attention interaction to a lower-dimensional subspace.</p>
+<h3 id="4-additive-bahdanau-attention">4. Additive (Bahdanau) Attention<a class="headerlink" href="#4-additive-bahdanau-attention" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+e_i = v^\top \tanh(W_1 h_i + W_2 s) \in \mathbb{R}
+\]</div>
+<p>where <span class="arithmatex">\(W_1 \in \mathbb{R}^{d_3 \times d_1}\)</span>, <span class="arithmatex">\(W_2 \in \mathbb{R}^{d_3 \times d_2}\)</span> are learned weight matrices, and <span class="arithmatex">\(v \in \mathbb{R}^{d_3}\)</span> is a learned vector. Here, <span class="arithmatex">\(d_3\)</span> is a tunable dimensionality (sometimes called the attention dimension). Despite its name, this formulation involves a nonlinearity and trainable layers, making it functionally a feedforward neural network scoring mechanism. This form of attention was used in early neural machine translation systems and performs well when encoder and decoder dimensions differ.</p>
+<p>Attention mechanisms eliminate the fixed-length context bottleneck and form the foundation for modern architectures such as Transformers, which rely entirely on attention for sequence modeling.</p>
 
 
 
@@ -1065,15 +1134,31 @@
       
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
+          
+          <a href="../7_eval_nlp/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Evaluation of Language Models">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. Evaluation of Language Models
+              </div>
+            </div>
+          </a>
+        
         
           
-          <a href="nlp/1_intro/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. NLP an introduction">
+          <a href="../9_selfattention/" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Self- Attention">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. NLP an introduction
+                9. Self- Attention
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1124,12 +1209,12 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.path", "navigation.top", "navigation.footer", "toc.follow", "content.code.copy", "content.action.edit", "content.action.view", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="js/print-site.js"></script>
+        <script src="../../js/print-site.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       
