@@ -9,16 +9,11 @@ These notes are inspired by and draw heavily on material from:
 The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.
 
 
-
-
-
 ## Resume from:
 
 https://cme295.stanford.edu/syllabus/
 
-
-https://www.youtube.com/watch?v=VlA_jt_3Qc4
-
+https://www.youtube.com/watch?v=k5Fh-UgTuCo&t=11s
 
 https://cs329a.stanford.edu/
 https://cseweb.ucsd.edu/~yiying/cse291a-fall25/reading/

@@ -92,6 +92,7 @@ Instruction tuning is typically the first step in building an aligned model. How
 
 ![RLHF](images/RLHF.png)
 
+
 #### Learning Human Preferences
 Key challenge: Obtaining human feedback at scale is expensive, inconsistent, and noisy.
 
@@ -99,12 +100,32 @@ Solution: Instead of relying on absolute scores or direct ratings—which are of
 
 A commonly used model for interpreting such data is the Bradley–Terry model, which assigns a higher latent score to the preferred (“winning”) output over the non-preferred (“losing”) one.
 
-#### Reinforcement Learning from Human Feedback (RLHF)
-RLHF is a three-step pipeline:
 
-1. Supervised Instruction Tuning: Finetune the language model on instruction datasets to teach basic task-following behavior.
-2. Reward Modeling: Collect human preference data in the form of comparisons between model outputs. Train a reward model (RM) to predict human preferences by learning to assign higher scores to preferred responses.
-3. Policy Optimization: Use reinforcement learning (typically Proximal Policy Optimization, PPO) to optimize the language model to produce outputs that maximize the predicted reward, while remaining close to the supervised model (e.g., via a KL-divergence penalty).
+#### Recipe to get (pairwise) preference data
+
+1. Generate a pair of responses $(\hat{y}_1, \hat{y}_2)$ for the same prompt $x$
+    - Input $x$ via logs / reference distribution  
+    - Output $\hat{y}$ via SFT model with $T > 0$ (synthetic / rewrites / sampling)
+
+2. Label $(x, \hat{y}_1)$ and $(x, \hat{y}_2)$
+
+    - Human rating  
+    - Proxies (e.g., LLM-as-a-judge, BLEU, ROUGE, etc.)  
+    - Variants:
+        - Binary scale: $1$ if better, $0$ if worse  
+        - Nuanced scale: e.g., $s \in [0, 1]$ or Likert-style ordinal scores
+
+#### Reinforcement Learning from Human Feedback (RLHF)
+
+1. Reward Modeling: Distinguish good from bad! 
+    Collect human preference data in the form of comparisons between model outputs. Train a reward model (RM) to predict human preferences by learning to assign higher scores to preferred responses.
+
+    - Input: (prompt $x$, response $\hat{y}$)
+    - Output: quantitative score $r(x,\hat{y})$
+    - Learn $r$ based on pairwise preference data (Bradley-Terry formulation)
+
+2. Reinforcement learning: Align the model!
+    Use reinforcement learning (typically Proximal Policy Optimization, PPO) to optimize the language model to produce outputs that maximize the predicted reward, while remaining close to the supervised model (e.g., via a KL-divergence penalty).
 
 Strengths:
 

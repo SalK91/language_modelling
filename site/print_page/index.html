@@ -405,6 +405,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -926,6 +930,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nlp/22_llm_training_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    22. LLM Training Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nlp/23_reasoning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    23. Reasoning in LLMs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1191,6 +1241,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nlp-22_llm_training_basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.22 22. LLM Training Basics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nlp-23_reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.23 23. Reasoning in LLMs
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1436,6 +1504,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nlp-22_llm_training_basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.22 22. LLM Training Basics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nlp-23_reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.23 23. Reasoning in LLMs
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1481,7 +1567,10 @@
 <p>The goal is not to reproduce these courses, but to synthesize their core ideas into a coherent, optimization and mathematics first perspective suitable for practitioners and researchers.</p>
 <h2 id="index-resume-from">Resume from:<a class="headerlink" href="#index-resume-from" title="Permanent link">¶</a></h2>
 <p>https://cme295.stanford.edu/syllabus/</p>
-<p>https://www.youtube.com/watch?v=VlA_jt_3Qc4</p></body></html></section>
+<p>https://www.youtube.com/watch?v=PmW_TMQ3l0I&amp;t=17s</p>
+<p>https://cs329a.stanford.edu/
+https://cseweb.ucsd.edu/~yiying/cse291a-fall25/reading/
+https://rdi.berkeley.edu/agentic-ai/f25</p></body></html></section>
                     <section class='print-page md-section' id='section-2' heading-number='2'>
                         <h1>Natural Language Processing<a class='headerlink' href='#section-2' title='Permanent link'></a>
                         </h1>
@@ -3101,6 +3190,19 @@ w_t \sim \text{softmax}(A h_{t-1} + b)
 </li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../nlp/images/pretraining_2.png" data-desc-position="bottom"><img alt="LoRA" src="../nlp/images/pretraining_2.png"></a></p>
+<p>Location of LoRA:</p>
+<ul>
+<li>Originally proposed in masked multi-head attention matrices.</li>
+<li>Nowadays recommended in the feed-forward layers (after attention)</li>
+</ul>
+<p>Empirical observations with LoRA:</p>
+<ul>
+<li>LoRA needs a higher learning rate than full fine-tuning</li>
+<li>LoRA does poorly on large batch size compared to full fine-tuning</li>
+</ul>
+<h3 id="nlp-14_finetuning-quantized-lora">Quantized LoRA<a class="headerlink" href="#nlp-14_finetuning-quantized-lora" title="Permanent link">¶</a></h3>
+<p>QLoRA trains low-rank adapters (LoRA) on top of a 4-bit quantized frozen LLM, keeping the base weights memory-efficient while still allowing learning. The implementation stores the base model in 4-bit NF4 precision and only updates small <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> matrices (LoRA matrices) in full precision. </p>
+<p>Intuition: freeze most of the model to save memory, and let tiny trainable adapters learn task-specific changes without touching the huge pretrained weights.</p>
 <h2 id="nlp-14_finetuning-empirical-comparison-of-fine-tuning-methods">Empirical Comparison of Fine-tuning Methods<a class="headerlink" href="#nlp-14_finetuning-empirical-comparison-of-fine-tuning-methods" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -4073,7 +4175,353 @@ A_t = softmax\left(\frac{Q_t K_{1:t}^\top}{\sqrt{d_k}}\right) V_{1:t}
 <li>Maintain a page table mapping token index → page slot.</li>
 <li>During decoding, gather only required pages for attention.</li>
 <li>Append new token KV into next free page.</li>
-</ol></body></html></section></section></div><style>.print-site-enumerate-headings #index > h1:before { content: '1 ' }
+</ol></body></html></section><section class="print-page" id="nlp-22_llm_training_basics" heading-number="2.22"><h1 id="nlp-22_llm_training_basics-nlp-22_llm_training_basics">22. LLM Training Basics</h1><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h2 id="tensors-and-pytorch">Tensors and PyTorch<a class="headerlink" href="#nlp-22_llm_training_basics-tensors-and-pytorch" title="Permanent link">¶</a></h2>
+<p>Tensors are the basic building block for storing everything in deep learning: parameters, gradients, optimizer state, data, and activations. Almost all of these are stored as floating-point numbers.</p>
+<p>By default, tensors live in CPU memory. To leverage the massive parallelism of GPUs, we move them to GPU memory via <code>.to(device)</code> or <code>.cuda()</code>.</p>
+<h3 id="nlp-22_llm_training_basics-what-is-a-tensor">What is a Tensor?<a class="headerlink" href="#nlp-22_llm_training_basics-what-is-a-tensor" title="Permanent link">¶</a></h3>
+<p>PyTorch tensors are pointers into allocated memory, plus metadata describing:</p>
+<ul>
+<li><code>shape</code></li>
+<li><code>stride</code> — how many elements to skip to move along each axis</li>
+<li><code>dtype</code></li>
+<li><code>device</code></li>
+</ul>
+<p>Most tensors are created from performing operations on other tensors. Each operation has some memory and compute consequence. Many operations simply provide a different <em>view</em> of the tensor. This does not make a copy, and therefore mutations in one tensor affect the other.</p>
+<h3 id="nlp-22_llm_training_basics-optional-math-example">Optional math example<a class="headerlink" href="#nlp-22_llm_training_basics-optional-math-example" title="Permanent link">¶</a></h3>
+<p>A tensor <span class="arithmatex">\(x \in \mathbb{R}^{m \times n}\)</span> is stored as a contiguous 1-D block of memory, with metadata describing how to interpret it. The stride vector <span class="arithmatex">\(s\)</span> defines indexing via:</p>
+<p>
+<script type="math/tex">
+x[i, j] = \text{memory}[i \cdot s_0 + j \cdot s_1]
+</script>
+</p>
+<p>If a view operation reshapes <span class="arithmatex">\(x\)</span> without copying, the underlying memory remains the same:</p>
+<p>
+<script type="math/tex">
+x' = \text{view}(x), \quad \text{ptr}(x') = \text{ptr}(x)
+</script>
+</p>
+<h2 id="nlp-22_llm_training_basics-flops-and-performance-in-deep-learning">FLOPs and Performance in Deep Learning<a class="headerlink" href="#nlp-22_llm_training_basics-flops-and-performance-in-deep-learning" title="Permanent link">¶</a></h2>
+<p>A FLOP (floating-point operation) is a basic arithmetic operation (e.g., addition or multiplication) on floating-point numbers. It is a standard measure of computational work in deep learning.</p>
+<h4 id="nlp-22_llm_training_basics-example-linear-layer-flops">Example: Linear Layer FLOPs<a class="headerlink" href="#nlp-22_llm_training_basics-example-linear-layer-flops" title="Permanent link">¶</a></h4>
+<p>Suppose we apply a linear model to a batch of <span class="arithmatex">\(B\)</span> vectors of dimension <span class="arithmatex">\(D\)</span>, mapping to <span class="arithmatex">\(K\)</span> outputs:</p>
+<div class="highlight"><pre><span></span><code><span class="n">B</span> <span class="o">=</span> <span class="mi">16384</span>  <span class="c1"># Batch size (e.g., number of tokens)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mi">32768</span>  <span class="c1"># Input dimension</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">8192</span>   <span class="c1"># Output dimension</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">get_device</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">w</span>
+</code></pre></div>
+<p>Each output <span class="arithmatex">\(y_{ik} = \sum_j x_{ij} w_{jk}\)</span> requires <span class="arithmatex">\(D\)</span> multiplications
+and <span class="arithmatex">\(D - 1\)</span> additions.</p>
+<p>Approximate total FLOPs:</p>
+<div class="arithmatex">\[
+FLOPs = 2  \times B  \times D  \times K
+\]</div>
+<h3 id="nlp-22_llm_training_basics-other-flops-estimates">Other FLOPs Estimates<a class="headerlink" href="#nlp-22_llm_training_basics-other-flops-estimates" title="Permanent link">¶</a></h3>
+<ul>
+<li>Elementwise operation (e.g., ReLU on <span class="arithmatex">\(m imes n\)</span> matrix): <span class="arithmatex">\(mn\)</span> FLOPs</li>
+<li>Matrix addition (<span class="arithmatex">\(m \times n + m \times n\)</span>): <span class="arithmatex">\(mn\)</span> FLOPs</li>
+<li>Normalization layers: <span class="arithmatex">\(O(mn)\)</span> FLOPs</li>
+</ul>
+<p>In general, matrix multiplications dominate FLOPs in large models like
+Transformers.</p>
+<h3 id="nlp-22_llm_training_basics-interpreting-flops-in-llms">Interpreting FLOPs in LLMs<a class="headerlink" href="#nlp-22_llm_training_basics-interpreting-flops-in-llms" title="Permanent link">¶</a></h3>
+<ul>
+<li><span class="arithmatex">\(B\)</span> is number of tokens or batch size</li>
+<li><span class="arithmatex">\(D \times K\)</span> is number of parameters in a linear layer</li>
+<li>Forward pass FLOPs: <span class="arithmatex">\(2 \cdot B \cdot D \cdot K\)</span></li>
+<li>Total FLOPs: Sum over all layers, multiplied by batch size and sequence length</li>
+</ul>
+<h3 id="nlp-22_llm_training_basics-rule-of-thumb">Rule of thumb<a class="headerlink" href="#nlp-22_llm_training_basics-rule-of-thumb" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[FLOPs \approx 2 \cdot    \text{#tokens} \cdot  \text{#parameters (per layer)}\]</div>
+<h3 id="nlp-22_llm_training_basics-model-flops-utilization-mfu">Model FLOPs Utilization (MFU)<a class="headerlink" href="#nlp-22_llm_training_basics-model-flops-utilization-mfu" title="Permanent link">¶</a></h3>
+<p>Definition:</p>
+<div class="arithmatex">\[
+MFU = \frac{\text{Actual FLOPs/sec}}{\text{Peak Theoretical FLOPs/sec}}
+\]</div>
+<p>MFU indicates how closely the training process approaches the maximum
+compute capability of the hardware.</p>
+<h4 id="nlp-22_llm_training_basics-why-mfu-is-not-always-1">Why MFU is not always 1<a class="headerlink" href="#nlp-22_llm_training_basics-why-mfu-is-not-always-1" title="Permanent link">¶</a></h4>
+<ul>
+<li>Non-matmul operations (activations, normalization, data movement)
+    are often memory-bound</li>
+<li>Kernel launch overhead from many small kernels</li>
+<li>Memory bandwidth bottlenecks</li>
+<li>Irregular workloads (uneven tensor sizes, short sequences)</li>
+<li>Communication overhead in multi-GPU setups (sync, data transfer)</li>
+</ul>
+<h4 id="nlp-22_llm_training_basics-what-is-a-good-mfu">What is a good MFU?<a class="headerlink" href="#nlp-22_llm_training_basics-what-is-a-good-mfu" title="Permanent link">¶</a></h4>
+<p>Typically:</p>
+<div class="arithmatex">\[
+MFU \ge 0.5   \text{ is considered good}
+\]</div>
+<p>MFU improves when:</p>
+<ul>
+<li>Matrix multiplications dominate the workload</li>
+<li>Batch sizes and sequence lengths are large</li>
+<li>Code is optimized for the hardware</li>
+</ul>
+<h2 id="nlp-22_llm_training_basics-mixed-precision-training">Mixed-Precision Training<a class="headerlink" href="#nlp-22_llm_training_basics-mixed-precision-training" title="Permanent link">¶</a></h2>
+<h3 id="nlp-22_llm_training_basics-floating-point-formats-in-gpus">Floating-Point Formats in GPUs<a class="headerlink" href="#nlp-22_llm_training_basics-floating-point-formats-in-gpus" title="Permanent link">¶</a></h3>
+<h4 id="nlp-22_llm_training_basics-floating-point-101">Floating-point 101<a class="headerlink" href="#nlp-22_llm_training_basics-floating-point-101" title="Permanent link">¶</a></h4>
+<p>A binary floating-point number is encoded as:</p>
+<div class="arithmatex">\[\underbrace{\text{sign}}_{\;1\;\text{bit}}\;
+\underbrace{\text{exponent}}_{\;e\;\text{bits}}\;
+\underbrace{\text{mantissa / significand}}_{\;m\;\text{bits}}
+\]</div>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th style="text-align: right;">Bits</th>
+<th style="text-align: right;">Exponent</th>
+<th style="text-align: right;">Mantissa</th>
+<th>Approx. Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP32 (single)</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">23</td>
+<td><span class="arithmatex">\(10^{-45}\)</span> – <span class="arithmatex">\(10^{38}\)</span></td>
+</tr>
+<tr>
+<td>FP16 (half)</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+<td><span class="arithmatex">\(2 \times 10^{-14}\)</span> – <span class="arithmatex">\(2 \times 10^{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Precision vs. range: Reducing the mantissa increases spacing between representable values, so small increments (e.g. <span class="arithmatex">\(1.0001\)</span>) round to <span class="arithmatex">\(1.0\)</span> in FP16.<br>
+A narrower exponent field also shrinks dynamic range, increasing overflow/underflow risk.</p>
+<h3 id="nlp-22_llm_training_basics-fp32-vs-fp16-in-neural-network-training">FP32 vs. FP16 in Neural-Network Training<a class="headerlink" href="#nlp-22_llm_training_basics-fp32-vs-fp16-in-neural-network-training" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>Default FP32 training: Parameters and gradients are stored in FP32. High memory usage <span class="arithmatex">\(\rightarrow\)</span> risk of OOM on large models.</p>
+</li>
+<li>
+<p>Naïve FP16 swap: Reduces memory and bandwidth by 50%, but:</p>
+<ul>
+<li>Gradients may underflow to zero</li>
+<li>Weight updates lose precision <span class="arithmatex">\(\rightarrow\)</span> poor convergence</li>
+</ul>
+</li>
+</ul>
+<h3 id="nlp-22_llm_training_basics-mixed-precision-training-core-idea">Mixed-Precision Training: Core Idea<a class="headerlink" href="#nlp-22_llm_training_basics-mixed-precision-training-core-idea" title="Permanent link">¶</a></h3>
+<p>Keep critical operations in FP32 while using FP16 where safe:</p>
+<ol>
+<li>Maintain a set of FP32 master weights</li>
+<li>Cast a working copy of the model to FP16; do the forward pass there.</li>
+<li>Back-propagate (initial gradients in FP16)</li>
+<li>Convert (copy) gradients to FP32</li>
+<li>Update the FP32 master weights with your optimizer (SGD/Adam, etc.).</li>
+<li>Cast the updated weights back to FP16 for the next forward pass.</li>
+</ol>
+<h3 id="nlp-22_llm_training_basics-preventing-gradient-underflow-dynamic-loss-scaling">Preventing Gradient Underflow: Dynamic Loss Scaling<a class="headerlink" href="#nlp-22_llm_training_basics-preventing-gradient-underflow-dynamic-loss-scaling" title="Permanent link">¶</a></h3>
+<p>Even with mixed precision, tiny gradients can vanish. A practical recipe, adapted from:</p>
+<p>Procedure:</p>
+<ul>
+<li>Choose a loss‑scaling factor <span class="arithmatex">\(S\)</span> (e.g.\ powers of two).\footnote{Modern frameworks adjust <span class="arithmatex">\(S\)</span> automatically (“dynamic” scaling).}</li>
+<li>Multiply the computed loss by <span class="arithmatex">\(S\)</span> before back‑propagation.</li>
+<li>Compute FP16 gradients of the scaled loss.</li>
+<li>Convert gradients to FP32 and divide them by <span class="arithmatex">\(S\)</span>.</li>
+<li>Proceed with the usual FP32 weight update \&amp; casting loop above.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../nlp/images/mixedprecision.png" data-desc-position="bottom"><img alt="Pytorch - Mixed Precision Training" src="../nlp/images/mixedprecision.png"></a></p>
+<h3 id="nlp-22_llm_training_basics-benefits">Benefits<a class="headerlink" href="#nlp-22_llm_training_basics-benefits" title="Permanent link">¶</a></h3>
+<ul>
+<li><span class="arithmatex">\(\approx 2\times\)</span> faster math on Tensor Cores (Volta/Ampere+)</li>
+<li><span class="arithmatex">\(\approx 2\times\)</span> lower memory footprint, enabling larger batch sizes or models.</li>
+<li>Same convergence as FP32 when loss scaling is correct</li>
+</ul>
+<h3 id="nlp-22_llm_training_basics-caveats">Caveats<a class="headerlink" href="#nlp-22_llm_training_basics-caveats" title="Permanent link">¶</a></h3>
+<ul>
+<li>Verify numerical stability on your model; some niche layers (e.g. custom CUDA kernels) may not be FP16‑safe.</li>
+<li>Loss scaling adds minor overhead if done manually; use the built‑in API of your deep‑learning framework whenever possible.</li>
+</ul>
+<h2 id="nlp-22_llm_training_basics-bfloat16">BFloat16<a class="headerlink" href="#nlp-22_llm_training_basics-bfloat16" title="Permanent link">¶</a></h2>
+<p>Google Brain developed bfloat (brain floating point) in 2018 to address this issue. bfloat16 uses the same memory as float16 but has the same dynamic range as float32! The only catch is that the resolution is worse, but this matters less for deep learning.</p>
+<p>Core idea: BFloat16 (16-bit float) keeps the same exponent size as FP32, so it has a very wide range but with lower precision (7 mantissa bits).  </p>
+<p>This makes it:</p>
+<ul>
+<li>Fast and memory-efficient like FP16</li>
+<li>Avoids gradient underflow</li>
+<li>No loss scaling required</li>
+</ul>
+<h4 id="nlp-22_llm_training_basics-implementation-steps">Implementation steps<a class="headerlink" href="#nlp-22_llm_training_basics-implementation-steps" title="Permanent link">¶</a></h4>
+<ol>
+<li>Keep a set og FP32 master weights</li>
+<li>Cast model to BFloat16 for forward/backward passes(<code>model.to(torch.bfloat16)</code>)</li>
+<li>Gradients accumulate in FP32 by default</li>
+<li>Update FP32 master weights as usual</li>
+<li>Cast updated weights back to BFloat16 for next step</li>
+</ol>
+<p>No loss scaling required, BFloat16 simplifies mixed-precision training by providing FP32-like range with FP16-like speed and memory savings.</p>
+<h2 id="nlp-22_llm_training_basics-multi-gpu-training-from-ddp-to-zero">Multi-GPU Training: From DDP to ZeRO<a class="headerlink" href="#nlp-22_llm_training_basics-multi-gpu-training-from-ddp-to-zero" title="Permanent link">¶</a></h2>
+<ol>
+<li>
+<p>Single-GPU Setup: In a typical mixed-precision setup:</p>
+<ul>
+<li>Model parameters: Stored in FP16 on GPU VRAM.</li>
+<li>Optimizer state (FP32):<ul>
+<li>Master weights (for precision-preserving updates)</li>
+<li>Momentum buffers (e.g., Adam)</li>
+<li>Variance estimates (e.g., Adam)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Distributed Data Parallel (DDP) — Baseline: DDP replicates the entire model and optimizer state across all GPUs and splits the input data:</p>
+<ul>
+<li>
+<p>Each GPU computes a forward and backward pass on its mini-batch.</p>
+</li>
+<li>
+<p>During backpropagation, gradients are synchronized across all GPUs using an AllReduce.</p>
+</li>
+<li>
+<p>Each GPU independently applies the optimizer update to its local copy of the model.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>Communication cost: Each gradient (typically in FP32 unless cast to FP16) is sent across GPUs. The bandwidth cost is roughly ∼4 bytes per parameter (or ∼2 bytes with
+FP16 compression)</p>
+<p>Limitation: Memory overhead scales poorly — each GPU stores a full copy of model parameters and optimizer state.</p>
+<h2 id="nlp-22_llm_training_basics-zero-zero-redundancy-optimizer-deepspeed">ZeRO: Zero Redundancy Optimizer (DeepSpeed)<a class="headerlink" href="#nlp-22_llm_training_basics-zero-zero-redundancy-optimizer-deepspeed" title="Permanent link">¶</a></h2>
+<p>ZeRO removes the major inefficiency of Distributed Data Parallel (DDP), where every GPU keeps a full copy of model parameters, gradients, and optimizer states. Instead, ZeRO partitions (shards) training states across GPUs so that each device holds only the slice of memory it actually needs, while still participating in full model training.</p>
+<h3 id="nlp-22_llm_training_basics-zero-stage-1-optimizer-state-sharding">ZeRO Stage-1: Optimizer State Sharding<a class="headerlink" href="#nlp-22_llm_training_basics-zero-stage-1-optimizer-state-sharding" title="Permanent link">¶</a></h3>
+<ul>
+<li>Each GPU stores:<ul>
+<li>The full FP16 model</li>
+<li>Only a shard of the optimizer state</li>
+</ul>
+</li>
+<li>Each GPU computes gradients on its data shard</li>
+<li>Gradients are reduce-scattered so each GPU receives only the gradients for its parameter shard</li>
+<li>Each GPU updates its own optimizer shard and corresponding parameters</li>
+<li>Updated parameters are all-gathered so all GPUs hold a synchronized model</li>
+</ul>
+<h3 id="nlp-22_llm_training_basics-zero-stage-2-optimizer-state-gradient-sharding">ZeRO Stage-2: Optimizer State + Gradient Sharding<a class="headerlink" href="#nlp-22_llm_training_basics-zero-stage-2-optimizer-state-gradient-sharding" title="Permanent link">¶</a></h3>
+<p>Builds upon Stage-1 by also sharding gradients:</p>
+<ul>
+<li>Gradients are never fully instantiated in memory</li>
+<li>During backward pass:<ul>
+<li>Each GPU computes gradients for a layer</li>
+<li>Immediately reduces gradients to the GPU responsible for that parameter shard</li>
+<li>Frees local gradient memory once sent</li>
+</ul>
+</li>
+<li>After backpropagation, each GPU:<ul>
+<li>Updates its optimizer and parameter shards locally</li>
+<li>Parameters are synchronized via all-gather before the next forward pass</li>
+</ul>
+</li>
+</ul>
+<p>Benefit: significantly reduces memory footprint — gradients and optimizer states are distributed.</p>
+<h2 id="nlp-22_llm_training_basics-zero-stage-3-full-model-gradient-and-optimizer-sharding">ZeRO Stage-3: Full Model, Gradient, and Optimizer Sharding<a class="headerlink" href="#nlp-22_llm_training_basics-zero-stage-3-full-model-gradient-and-optimizer-sharding" title="Permanent link">¶</a></h2>
+<p>In this final stage:</p>
+<ul>
+<li>Model parameters are sharded across GPUs — no GPU stores the full model</li>
+<li>Parameters are materialized just-in-time during forward/backward and deallocated afterward</li>
+<li>Training requires orchestration of:<ul>
+<li>Parameter gathering</li>
+<li>Gradient sharding and reduction</li>
+<li>Activation checkpointing (optional but common)</li>
+</ul>
+</li>
+<li>Implemented in PyTorch via <code>torch.distributed.fsdp</code> (Fully Sharded Data Parallel)</li>
+</ul>
+<p>Use case: enables training of models with hundreds of billions to trillions of parameters on commodity GPU clusters.</p>
+<table>
+<thead>
+<tr>
+<th>Training Strategy</th>
+<th>Model Sharded</th>
+<th>Gradients Sharded</th>
+<th>Optimizer Sharded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDP (Baseline)</td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td><span class="arithmatex">\(\times\)</span></td>
+</tr>
+<tr>
+<td>ZeRO Stage-1</td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+</tr>
+<tr>
+<td>ZeRO Stage-2</td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+</tr>
+<tr>
+<td>ZeRO Stage-3</td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+<td><span class="arithmatex">\(\checkmark\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="nlp-22_llm_training_basics-key-takeaways">Key Takeaways<a class="headerlink" href="#nlp-22_llm_training_basics-key-takeaways" title="Permanent link">¶</a></h2>
+<ul>
+<li>ZeRO reduces memory consumption linearly with GPU count.</li>
+<li>Enables training of large models without sacrificing batch size or needing model parallelism.</li>
+<li>Fully Sharded Data Parallel (FSDP) in PyTorch and DeepSpeed provide user-friendly APIs to leverage ZeRO at scale.</li>
+</ul></body></html></section><section class="print-page" id="nlp-23_reasoning" heading-number="2.23"><html><head>
+        <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            remove_material_navigation();remove_mkdocs_theme_navigation();generate_toc();
+        })
+        </script>
+        </head><body><h1 id="reasoning">Reasoning<a class="headerlink" href="#nlp-23_reasoning-reasoning" title="Permanent link">¶</a></h1>
+<h2 id="nlp-23_reasoning-what-do-we-mean-by-reasoning">What Do We Mean by “Reasoning”?<a class="headerlink" href="#nlp-23_reasoning-what-do-we-mean-by-reasoning" title="Permanent link">¶</a></h2>
+<p>Reasoning is the disciplined use of facts and logic to reach new conclusions.</p>
+<ul>
+<li>Deductive reasoning derives conclusions that must be true if the premises are true.</li>
+<li>Inductive reasoning generalises from repeated observations to predict what is likely to hold in future.</li>
+<li>Abductive reasoning infers the most plausible explanation for an observation (“inference to the best explanation”).</li>
+</ul>
+<h2 id="nlp-23_reasoning-reasoning-in-large-language-models-llms">Reasoning in Large Language Models (LLMs)<a class="headerlink" href="#nlp-23_reasoning-reasoning-in-large-language-models-llms" title="Permanent link">¶</a></h2>
+<p>Large language models excel at predicting the next token given a context — essentially a massively multivariate pattern-completion task. Whether this <em>is</em> reasoning is an open research question, but several techniques reliably elicit reasoning-like behavior.</p>
+<h3 id="nlp-23_reasoning-prompt-engineering">Prompt Engineering<a class="headerlink" href="#nlp-23_reasoning-prompt-engineering" title="Permanent link">¶</a></h3>
+<ul>
+<li>Chain-of-Thought (CoT) prompts append reasoning demonstrations (e.g., "Let's think step-by-step") to encourage the model to reveal latent intermediate states. </li>
+<li>Least-to-Most (LtM) decomposition breaks a hard task into a sequence of smaller sub‑problems; the LLM solves each sub‑problem in order, reducing error accumulation. </li>
+</ul>
+<h3 id="nlp-23_reasoning-counterfactual-probes">Counterfactual Probes<a class="headerlink" href="#nlp-23_reasoning-counterfactual-probes" title="Permanent link">¶</a></h3>
+<p>By editing premises and comparing completions, researchers can distinguish memorisation from real generalisation: if the model’s answer tracks the \emph{counterfactual} change, it has formed some causal abstraction rather than merely retrieving training data.</p>
+<h3 id="nlp-23_reasoning-limitations">Limitations<a class="headerlink" href="#nlp-23_reasoning-limitations" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>Current LLMs have no explicit logical machinery or world model; apparent <code>logic</code> emerges from statistical correlations. </p>
+</li>
+<li>
+<p>Faithfulness is not guaranteed: the model may generate fluent but incorrect reasoning chains (hallucinations).</p>
+</li>
+<li>
+<p>Working memory is finite, so long multi‑step proofs can overflow the context window unless external scratchpads or tool use are provided.</p>
+</li>
+</ul></body></html></section></section></div><style>.print-site-enumerate-headings #index > h1:before { content: '1 ' }
 
                 .print-site-enumerate-headings #index h2:before { content: '1.' counter(counter-index-2) ' ' }
                 .print-site-enumerate-headings #index h2 {  counter-reset: counter-index-3 ;  counter-increment: counter-index-2 }
@@ -4186,6 +4634,16 @@ A_t = softmax\left(\frac{Q_t K_{1:t}^\top}{\sqrt{d_k}}\right) V_{1:t}
 
                 .print-site-enumerate-headings #nlp-21_advanced_topics h2:before { content: '2.21.' counter(counter-nlp-21_advanced_topics-2) ' ' }
                 .print-site-enumerate-headings #nlp-21_advanced_topics h2 {  counter-increment: counter-nlp-21_advanced_topics-2 }
+            
+.print-site-enumerate-headings #nlp-22_llm_training_basics > h1:before { content: '2.22 ' }
+
+                .print-site-enumerate-headings #nlp-22_llm_training_basics h2:before { content: '2.22.' counter(counter-nlp-22_llm_training_basics-2) ' ' }
+                .print-site-enumerate-headings #nlp-22_llm_training_basics h2 {  counter-increment: counter-nlp-22_llm_training_basics-2 }
+            
+.print-site-enumerate-headings #nlp-23_reasoning > h1:before { content: '2.23 ' }
+
+                .print-site-enumerate-headings #nlp-23_reasoning h2:before { content: '2.23.' counter(counter-nlp-23_reasoning-2) ' ' }
+                .print-site-enumerate-headings #nlp-23_reasoning h2 {  counter-increment: counter-nlp-23_reasoning-2 }
             </style>
 
 
