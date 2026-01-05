@@ -138,3 +138,7 @@ nav:
       - 21. Advanced Topics in Language Modelling: "nlp/21_advanced_topics.md"
       - 22. LLM Training Basics: "nlp/22_llm_training_basics.md"
       - 23. Reasoning in LLMs: "nlp/23_reasoning.md"
+      - 24. Retrieval-Augmented Generation: "nlp/24_rag.md"
+      - 25. Tool Calling: "nlp/25_tool.md"
+      - 26. Agents: "nlp/26_agents.md"
+      - 27. LLM evaluation: "nlp/27_evals.md"
